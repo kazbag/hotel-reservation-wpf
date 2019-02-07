@@ -1,0 +1,22 @@
+﻿<Window x:Class="wpflogin.LoginScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpflogin"
+        mc:Ignorable="d"
+        Title="Hotel Kleszcz" Height="450" Width="450" Background="#05668D">
+    <Border Background="#12222C" CornerRadius="25" Margin="20">
+        <StackPanel Margin="20">
+            <Label Content="Hotel 'Kleszcz'" Foreground="#EBF2FA" FontSize="24"></Label>
+            <Separator Background="AliceBlue"></Separator>
+            <Label Content="Użytkownik" Foreground="White"></Label>
+            <TextBox Name="txtUsername" Background="#182D3B" FontSize="18" Foreground="#EBF2FA"></TextBox>
+            <Label Content="Hasło" Foreground="White"></Label>
+            <PasswordBox Name="txtPassword" Background="#182D3B" FontSize="18" Foreground="#ebf2fa"></PasswordBox>
+            
+            <Button Name="btnSubmit" Click="BtnSubmit_OnClick" Padding="5" Foreground="#EBF2FA" Background="#182D3B" Content="Zaloguj" Margin="60 30"></Button>
+            
+        </StackPanel>
+    </Border>
+</Window>
