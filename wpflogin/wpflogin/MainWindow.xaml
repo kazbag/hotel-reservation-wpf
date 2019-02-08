@@ -8,75 +8,84 @@
         Title="Panel rezerwacji" Height="Auto" MinHeight="700" MinWidth="500" Width="400">
 
     <Border Margin="5">
-<!-- Calendar -->
         <StackPanel Background="DodgerBlue">
-            <Label Foreground="#EBF2FA" Background="#182D3B" Content="Witaj w panelu!" FontSize="10"></Label>
-            <Grid Margin="10">
-                <Button Click="ButtonBase_OnClick" Content="Wyloguj"></Button>
-            </Grid>
-            <Label Margin="10 0" Content="Kiedy chcesz zarezerwować pokój?" Background="#182D3B" Foreground="AliceBlue"></Label>
-           <!-- -->
-           <Grid>
-               <Grid.ColumnDefinitions>
-                   <ColumnDefinition Width="1*"></ColumnDefinition>
-                   <ColumnDefinition Width="1*"></ColumnDefinition>
-               </Grid.ColumnDefinitions>
-               <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="0" Content="Od" Margin="10"></Label>
-               <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="1" Content="Do" Margin="10"></Label>
-           </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Calendar Grid.Column="0" Margin="10 0 0 10" Background="#c9c9c9"></Calendar>
-            <Calendar Grid.Column="1" Margin="10 0 0 10" Background="#c9c9c9"></Calendar>
 
-            </Grid>
-            
-            <Separator Background="AliceBlue"></Separator>
+            <Label Foreground="#EBF2FA" Background="#182D3B" Content="Witaj w panelu!" FontSize="10"></Label>
+            <Button Margin="10" Name="logoutBtn" Click="ButtonBase_OnClick" Content="Wyloguj"></Button>
+
+            <!--kalendarze-->
+
+            <Label Margin="10 0" Content="Kiedy chcesz zarezerwować pokój?" Background="#182D3B" Foreground="AliceBlue"></Label>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+                <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="0" Content="Od" Margin="10"></Label>
+                <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="1" Content="Do" Margin="10"></Label>
+            </Grid>
+            <Grid Name="calendarGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Calendar Name="fromCalendar" Grid.Column="0" Margin="10 0 0 10" Background="#c9c9c9"></Calendar>
+                <Calendar Name="toCalendar" Grid.Column="1" Margin="10 0 0 10" Background="#c9c9c9"></Calendar>
+            </Grid>
+
+            <!--koniec kalendarzy-->
+
+            <Separator Background="AliceBlue"></Separator>
+
+            <!--ludzie-->
+
+            <Grid Name="peopleDescription">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
                 <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="0" Content="Dorośli" Margin="10"></Label>
                 <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="1" Content="Dzieci" Margin="10"></Label>
             </Grid>
 
-            <Grid>
 
+            <Grid Name="peopleAmount">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                    <ComboBox Name="adultsCombobox" SelectedItem="1" Margin="10 0" Grid.Column="0">
+                <ComboBox Name="adultsCombobox" SelectedItem="1" Margin="10 0" Grid.Column="0">
                     <ComboBoxItem Content="0"></ComboBoxItem>
                     <ComboBoxItem Content="1"></ComboBoxItem>
-                        <ComboBoxItem IsSelected="True" Content="2"></ComboBoxItem>
-                        <ComboBoxItem Content="3"></ComboBoxItem>
-                        <ComboBoxItem Content="4"></ComboBoxItem>
+                    <ComboBoxItem IsSelected="True" Content="2"></ComboBoxItem>
+                    <ComboBoxItem Content="3"></ComboBoxItem>
+                    <ComboBoxItem Content="4"></ComboBoxItem>
                 </ComboBox>
 
                 <ComboBox Name="childrenCombobox" SelectedItem="0" Margin="10 0" Grid.Column="1">
-                        <ComboBoxItem IsSelected="True" Content="0"></ComboBoxItem>
-                        <ComboBoxItem Content="1"></ComboBoxItem>
-                        <ComboBoxItem Content="2"></ComboBoxItem>
-                        <ComboBoxItem Content="3"></ComboBoxItem>
-                        <ComboBoxItem Content="4"></ComboBoxItem>
-                        
+                    <ComboBoxItem IsSelected="True" Content="0"></ComboBoxItem>
+                    <ComboBoxItem Content="1"></ComboBoxItem>
+                    <ComboBoxItem Content="2"></ComboBoxItem>
+                    <ComboBoxItem Content="3"></ComboBoxItem>
+                    <ComboBoxItem Content="4"></ComboBoxItem>
                 </ComboBox>
-
             </Grid>
 
+            <!--koniec ludzi-->
+
+            <!--udogodnienia-->
+            
             <Label Margin="10 10" Content="Udogodnienia" Background="#182D3B" Foreground="AliceBlue"></Label>
 
-        <Grid Name="extras" Margin="10 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            <Grid Name="extras" Margin="10 0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Background="#182D3B">
                     <CheckBox Margin="1" Content="Pobudka" Foreground="AliceBlue"></CheckBox>
@@ -84,46 +93,20 @@
                     <CheckBox Margin="1" Content="Sejf" Foreground="AliceBlue"></CheckBox>
                 </StackPanel>
 
-            <StackPanel Grid.Column="1" Background="#182D3B">
+                <StackPanel Grid.Column="1" Background="#182D3B">
                     <CheckBox Margin="1" Content="Łóżeczko dla dziecka" Foreground="AliceBlue"></CheckBox>
                     <CheckBox Margin="1" Content="Ekspres do kawy" Foreground="AliceBlue"></CheckBox>
                     <CheckBox Margin="1" Content="Śniadanie do łóżka" Foreground="AliceBlue"></CheckBox>
                 </StackPanel>
-        </Grid>
 
-            <Grid Margin="0 10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    
-                </Grid.ColumnDefinitions>
-            <Button Click="BtnCheck_OnClick" Name="btnCheck" Padding="3" Margin="100 0" Grid.Column="1" Content="Sprawdź dostępność"></Button>
-            
             </Grid>
-            <!--<StackPanel>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                <!--sprawdzanie dostępności-->
 
-                    <StackPanel Grid.Column="0">
+                <Button Click="BtnCheck_OnClick" Name="btnCheck" Padding="3" Margin="100 10" Grid.Column="1" Content="Sprawdź dostępność"></Button>
 
-                <Label Background="#182D3B" Foreground="AliceBlue" Margin="10 2" Content="Imię"></Label>
-                <TextBox Margin="10 0" Background="AliceBlue"></TextBox>
-                <Label Background="#182D3B" Foreground="AliceBlue" Margin="10 2" Content="Nazwisko"></Label>
-                <TextBox Margin="10 0" Background="AliceBlue"></TextBox>
-                    </StackPanel>
-                <StackPanel Grid.Column="1">
+                <!--koniec sprawdzania dostępności-->
 
-                <Label Background="#182D3B" Foreground="AliceBlue" Margin="10 2" Content="Telefon"></Label>
-                <TextBox Margin="10 0" Background="AliceBlue"></TextBox>
-                <Label Background="#182D3B" Foreground="AliceBlue" Margin="10 2" Content="Email"></Label>
-                <TextBox Margin="10 0" Background="AliceBlue"></TextBox>
-                </StackPanel>
-                </Grid>
-                <Button Click="BtnBook_OnClick" Name="btnBook" Padding="3" Margin="100 10" Grid.Column="1" Content="Zarezerwuj"></Button>
-            </StackPanel>-->
         </StackPanel>
     </Border>
 </Window>

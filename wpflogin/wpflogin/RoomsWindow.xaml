@@ -9,46 +9,59 @@
     <Border Margin="10" Background="#182D3B">
 
         <StackPanel>
-            <!--<Grid>-->
-            <Grid>
-<Grid.ColumnDefinitions>
-    <ColumnDefinition Width="2*"></ColumnDefinition>
-    <ColumnDefinition Width="1*"></ColumnDefinition>
-    <ColumnDefinition Width="1*"></ColumnDefinition>
-    <ColumnDefinition Width="1*"></ColumnDefinition>
-    <ColumnDefinition Width="1*"></ColumnDefinition>
-    <ColumnDefinition Width="1*"></ColumnDefinition>
-    <ColumnDefinition Width="1*"></ColumnDefinition>
-    <ColumnDefinition Width="1*"></ColumnDefinition>
-    <!--<ColumnDefinition Width="3*"></ColumnDefinition>-->
-</Grid.ColumnDefinitions>
+
+            <!--główne menu-->
+
+            <Grid Name="mainMenu">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
                 <TextBlock Margin="10" Grid.Column="0" Text="Lista pokojów" Foreground="AliceBlue"></TextBlock>
-            <Button Click="GoBackBtn_OnClick" Grid.Column="8" MaxWidth="100" Name="goBackBtn" Content="Wróć"></Button>
-            <!--</Grid>-->
+                <Button Name="goBackBtn" Click="GoBackBtn_OnClick" Grid.Column="8" MaxWidth="100" Content="Wróć"></Button>
+
             </Grid>
+
+            <!--koniec głównego menu-->
+
             <Separator Background="Cyan"></Separator>
 
-
-            
-
             <Grid Name="bookSection">
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+
+            <!--imię i nazwisko-->
+
                 <StackPanel Margin="10 0" Grid.Column="0">
                     <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Imię"></Label>
-                    <TextBox FontSize="18" Padding="10" Margin="0 10"></TextBox>
+                    <TextBox Name="clientNameTxt" FontSize="18" Padding="10" Margin="0 10"></TextBox>
                     <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Nazwisko"></Label>
-                    <TextBox FontSize="18" Padding="10" Margin="0 10"></TextBox>
+                    <TextBox Name="clientSecondNameTxt" FontSize="18" Padding="10" Margin="0 10"></TextBox>
                 </StackPanel>
+
+            <!--telefon i email-->
+
                 <StackPanel Margin="10 0" Grid.Column="1">
                     <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Telefon"></Label>
-                    <TextBox FontSize="18" Padding="10" Margin="0 10"></TextBox>
+                    <TextBox Name="clientPhoneTxt" FontSize="18" Padding="10" Margin="0 10"></TextBox>
                     <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Email"></Label>
-                    <TextBox FontSize="18" Padding="10" Margin="0 10"></TextBox>
+                    <TextBox Name="clientEmailTxt" FontSize="18" Padding="10" Margin="0 10"></TextBox>
                 </StackPanel>
             </Grid>
+
+            <!--lista dostępnych pokojów-->
+
             <Grid Margin="20" Background="CornflowerBlue">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -56,15 +69,14 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
+
                 <TextBlock Padding="10" Grid.Column="0" Text="Pokój 64" Foreground="AliceBlue"></TextBlock>
                 <TextBlock Padding="10" Grid.Column="1" Text="250zł" Foreground="AliceBlue"></TextBlock>
                 <TextBlock Padding="10" Grid.Column="2" Text="Piętro 3" Foreground="AliceBlue"></TextBlock>
 
                 <Button Click="BookBtn_OnClick" Grid.Column="3" Name="bookBtn" Content="Rezerwuj"></Button>
+
             </Grid>
         </StackPanel>
-
-
     </Border>
-        
 </Window>
