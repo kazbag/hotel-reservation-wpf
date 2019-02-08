@@ -1,0 +1,49 @@
+﻿<Window x:Class="wpflogin.RoomsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpflogin"
+        mc:Ignorable="d"
+        Title="RoomsWindow" MinHeight="450" MinWidth="450">
+    <Border Margin="10" Background="#182D3B">
+
+        <StackPanel>
+            <!--<Grid>-->
+            <Grid>
+<Grid.ColumnDefinitions>
+    <ColumnDefinition Width="2*"></ColumnDefinition>
+    <ColumnDefinition Width="1*"></ColumnDefinition>
+    <ColumnDefinition Width="1*"></ColumnDefinition>
+    <ColumnDefinition Width="1*"></ColumnDefinition>
+    <ColumnDefinition Width="1*"></ColumnDefinition>
+    <ColumnDefinition Width="1*"></ColumnDefinition>
+    <ColumnDefinition Width="1*"></ColumnDefinition>
+    <ColumnDefinition Width="1*"></ColumnDefinition>
+    <!--<ColumnDefinition Width="3*"></ColumnDefinition>-->
+</Grid.ColumnDefinitions>
+                <TextBlock Margin="10" Grid.Column="0" Text="Lista pokojów" Foreground="AliceBlue"></TextBlock>
+            <Button Click="GoBackBtn_OnClick" Grid.Column="8" MaxWidth="100" Name="goBackBtn" Content="Wróć"></Button>
+            <!--</Grid>-->
+            </Grid>
+            <Separator Background="Cyan"></Separator>
+
+
+            <Grid Margin="20" Background="CornflowerBlue">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Pokój 64" Foreground="AliceBlue"></TextBlock>
+                <TextBlock Grid.Column="1" Text="250zł" Foreground="AliceBlue"></TextBlock>
+                <TextBlock Grid.Column="2" Text="Piętro 3" Foreground="AliceBlue"></TextBlock>
+                <Button Click="BookBtn_OnClick" Grid.Column="3" Name="bookBtn" Content="Rezerwuj"></Button>
+            </Grid>
+            
+          
+        </StackPanel>
+    </Border>
+        
+</Window>

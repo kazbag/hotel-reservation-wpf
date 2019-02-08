@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,54 @@ namespace wpflogin
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        //
+        private void goBack()
+        {
+            RoomsWindow rooms = new RoomsWindow();
+            rooms.Show();
+            this.Close();
+        }
+        //
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Run the program again
+                Process.Start(Application.ResourceAssembly.Location);
+
+                // Close the Old one
+                Process.GetCurrentProcess().Kill();
+            }
+            catch
+            { }
+        }
+
+
+        private void BtnCheck_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Convert.ToByte(adultsCombobox.SelectedIndex.ToString()) == 0 && Convert.ToByte(childrenCombobox.SelectedIndex.ToString()) == 0)
+            {
+                MessageBox.Show("Nie możesz zarezerwować pokoju 0 osobowego.");
+            }
+            else
+            {
+            string currentValueFromCombobox = adultsCombobox.SelectedIndex.ToString();
+            MessageBox.Show(currentValueFromCombobox);
+            //RoomsWindow rooms = new RoomsWindow();
+            //rooms.Show();
+            //this.Close();
+            goBack();
+            }
+            
+        }
+
+        private void BtnBook_OnClick(object sender, RoutedEventArgs e)
+        {
+
+            
         }
     }
 }

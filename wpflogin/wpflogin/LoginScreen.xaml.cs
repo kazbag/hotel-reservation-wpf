@@ -66,7 +66,17 @@ namespace wpflogin
             {
                 sqlCon.Close();
             }
+            
 
+        }
+
+            // wywołuje logowanie enterem
+        private void TxtPassword_OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key != System.Windows.Input.Key.Enter) return;
+
+            e.Handled = true;
+            BtnSubmit_OnClick(sender, e);
         }
     }
 }

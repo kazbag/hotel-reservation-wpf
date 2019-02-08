@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpflogin"
         mc:Ignorable="d"
-        Title="Panel rezerwacji" Height="Auto" MinWidth="400" Width="400">
+        Title="Panel rezerwacji" Height="Auto" MinHeight="700" MinWidth="400" Width="400">
 
     <Border Margin="5">
 <!-- Calendar -->
         <StackPanel Background="DodgerBlue">
-            <Label Foreground="#EBF2FA" Background="#182D3B" Content="Cześć Admin!" FontSize="10"></Label>
+            <Label Foreground="#EBF2FA" Background="#182D3B" Content="Witaj w panelu!" FontSize="10"></Label>
             <Grid Margin="10">
-                <Button Content="Wyloguj"></Button>
+                <Button Click="ButtonBase_OnClick" Content="Wyloguj"></Button>
             </Grid>
             <Label Margin="10 0" Content="Kiedy chcesz zarezerwować pokój?" Background="#182D3B" Foreground="AliceBlue"></Label>
             <Calendar Margin="10" Background="#c9c9c9"></Calendar>
@@ -33,16 +33,16 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                    <ComboBox SelectedItem="1" Margin="10 0" Grid.Column="0">
-                        <ComboBoxItem Content="0"></ComboBoxItem>
+                    <ComboBox Name="adultsCombobox" SelectedItem="1" Margin="10 0" Grid.Column="0">
+                    <ComboBoxItem Content="0"></ComboBoxItem>
                     <ComboBoxItem Content="1"></ComboBoxItem>
-                        <ComboBoxItem Content="2"></ComboBoxItem>
+                        <ComboBoxItem IsSelected="True" Content="2"></ComboBoxItem>
                         <ComboBoxItem Content="3"></ComboBoxItem>
                         <ComboBoxItem Content="4"></ComboBoxItem>
                 </ComboBox>
 
-                    <ComboBox SelectedItem="0" Margin="10 0" Grid.Column="1">
-                        <ComboBoxItem Content="0"></ComboBoxItem>
+                <ComboBox Name="childrenCombobox" SelectedItem="0" Margin="10 0" Grid.Column="1">
+                        <ComboBoxItem IsSelected="True" Content="0"></ComboBoxItem>
                         <ComboBoxItem Content="1"></ComboBoxItem>
                         <ComboBoxItem Content="2"></ComboBoxItem>
                         <ComboBoxItem Content="3"></ComboBoxItem>
@@ -54,7 +54,7 @@
 
             <Label Margin="10 10" Content="Udogodnienia" Background="#182D3B" Foreground="AliceBlue"></Label>
 
-        <Grid Margin="10 0">
+        <Grid Name="extras" Margin="10 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
@@ -78,10 +78,10 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     
                 </Grid.ColumnDefinitions>
-            <Button Padding="3" Margin="100 0" Grid.Column="1" Content="Sprawdź dostępność"></Button>
+            <Button Click="BtnCheck_OnClick" Name="btnCheck" Padding="3" Margin="100 0" Grid.Column="1" Content="Sprawdź dostępność"></Button>
             
             </Grid>
-            <StackPanel>
+            <!--<StackPanel>
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -104,8 +104,8 @@
                 <TextBox Margin="10 0" Background="AliceBlue"></TextBox>
                 </StackPanel>
                 </Grid>
-                <Button Padding="3" Margin="100 10" Grid.Column="1" Content="Zarezerwuj"></Button>
-            </StackPanel>
+                <Button Click="BtnBook_OnClick" Name="btnBook" Padding="3" Margin="100 10" Grid.Column="1" Content="Zarezerwuj"></Button>
+            </StackPanel>-->
         </StackPanel>
     </Border>
 </Window>
