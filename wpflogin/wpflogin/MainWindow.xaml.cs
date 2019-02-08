@@ -58,8 +58,11 @@ namespace wpflogin
             }
             else
             {
-            string currentValueFromCombobox = adultsCombobox.SelectedIndex.ToString();
-            MessageBox.Show(currentValueFromCombobox);
+            string currentValueFromAdultsCombobox = adultsCombobox.SelectedIndex.ToString();
+            string currentValueFromChildrenCombobox = childrenCombobox.SelectedIndex.ToString();
+
+            int currentValue = (Convert.ToInt16(currentValueFromAdultsCombobox) + Convert.ToInt16(currentValueFromChildrenCombobox));
+            MessageBox.Show(currentValue + " osób");
             //RoomsWindow rooms = new RoomsWindow();
             //rooms.Show();
             //this.Close();

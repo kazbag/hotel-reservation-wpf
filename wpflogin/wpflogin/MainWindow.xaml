@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpflogin"
         mc:Ignorable="d"
-        Title="Panel rezerwacji" Height="Auto" MinHeight="700" MinWidth="400" Width="400">
+        Title="Panel rezerwacji" Height="Auto" MinHeight="700" MinWidth="500" Width="400">
 
     <Border Margin="5">
 <!-- Calendar -->
@@ -15,8 +15,26 @@
                 <Button Click="ButtonBase_OnClick" Content="Wyloguj"></Button>
             </Grid>
             <Label Margin="10 0" Content="Kiedy chcesz zarezerwować pokój?" Background="#182D3B" Foreground="AliceBlue"></Label>
-            <Calendar Margin="10" Background="#c9c9c9"></Calendar>
-<Separator Background="AliceBlue"></Separator>
+           <!-- -->
+           <Grid>
+               <Grid.ColumnDefinitions>
+                   <ColumnDefinition Width="1*"></ColumnDefinition>
+                   <ColumnDefinition Width="1*"></ColumnDefinition>
+               </Grid.ColumnDefinitions>
+               <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="0" Content="Od" Margin="10"></Label>
+               <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="1" Content="Do" Margin="10"></Label>
+           </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Calendar Grid.Column="0" Margin="10 0 0 10" Background="#c9c9c9"></Calendar>
+            <Calendar Grid.Column="1" Margin="10 0 0 10" Background="#c9c9c9"></Calendar>
+
+            </Grid>
+            
+            <Separator Background="AliceBlue"></Separator>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
