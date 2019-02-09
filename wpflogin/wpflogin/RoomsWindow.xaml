@@ -61,6 +61,12 @@
             </Grid>
 
             <!--lista dostępnych pokojów-->
+  
+            <!--tutaj będzie zwrócone zapytanie z bazy. jeśli odnaleziono dany rekord,
+            to zwraca w poszczególne textblock'i wartości z pierwszego odnalezionego pokoju w bazie. 
+            Zwraca tylko numer pokoju (RoomID), cenę za pokój (RoomCost), jak i piętro, na którym
+            znajduje się pokój (RoomFloor). Jeśli nie znaleziono pokoju spełniającego wymagania,
+            to wyświetli odpowiedni komunikat. -->
 
             <Grid Margin="20" Background="CornflowerBlue">
                 <Grid.ColumnDefinitions>
@@ -70,9 +76,9 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Padding="10" Grid.Column="0" Text="Pokój 64" Foreground="AliceBlue"></TextBlock>
-                <TextBlock Padding="10" Grid.Column="1" Text="250zł" Foreground="AliceBlue"></TextBlock>
-                <TextBlock Padding="10" Grid.Column="2" Text="Piętro 3" Foreground="AliceBlue"></TextBlock>
+                <TextBlock Name="RoomID" Padding="10" Grid.Column="0" Text="Pokój 64" Foreground="AliceBlue"></TextBlock>
+                <TextBlock Name="RoomCost" Padding="10" Grid.Column="1" Text="250zł" Foreground="AliceBlue"></TextBlock>
+                <TextBlock Name="RoomFloor" Padding="10" Grid.Column="2" Text="Piętro 3" Foreground="AliceBlue"></TextBlock>
 
                 <Button Click="BookBtn_OnClick" Grid.Column="3" Name="bookBtn" Content="Rezerwuj"></Button>
 

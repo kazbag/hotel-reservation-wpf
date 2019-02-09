@@ -21,9 +21,14 @@ namespace wpflogin
     /// </summary>
     public partial class MainWindow : Window
     {
+        public DateTime? SelectedDayFrom { get; set; }
+        public DateTime? SelectedDayTo { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            this.InitializeComponent();
+            this.DataContext = this;
         }
 
         //
@@ -49,9 +54,10 @@ namespace wpflogin
             { }
         }
 
-
+        // zlicza liczbę osób i zrzuca ją do zmiennej currentValue
         private void BtnCheck_OnClick(object sender, RoutedEventArgs e)
         {
+
             if (Convert.ToByte(adultsCombobox.SelectedIndex.ToString()) == 0 && Convert.ToByte(childrenCombobox.SelectedIndex.ToString()) == 0)
             {
                 MessageBox.Show("Nie możesz zarezerwować pokoju 0 osobowego.");
@@ -62,6 +68,7 @@ namespace wpflogin
             string currentValueFromChildrenCombobox = childrenCombobox.SelectedIndex.ToString();
 
             int currentValue = (Convert.ToInt16(currentValueFromAdultsCombobox) + Convert.ToInt16(currentValueFromChildrenCombobox));
+                // tylko wyświetla liczbę osób, sprawdzenie czy jest ok. można wyrzucić.
             MessageBox.Show(currentValue + " osób");
             //RoomsWindow rooms = new RoomsWindow();
             //rooms.Show();
@@ -71,10 +78,56 @@ namespace wpflogin
             
         }
 
-        private void BtnBook_OnClick(object sender, RoutedEventArgs e)
-        {
 
-            
+        // todo
+        // trzeba zrzucić do bazy -od i -do
+        // BookFrom i BookTo wyświetlają messageboxa, którego finalnie nie będzie. Można powiedzieć, że są to funkcje "testujące"
+
+        private void BookFrom(object sender, RoutedEventArgs e)
+        {
+            string msg;
+
+            if (SelectedDayFrom == null)
+                msg = "Nie rezerwuję";
+            else if (SelectedDayFrom >= DateTime.Today)
+                msg = string.Format("Rezerwuję {0:D}", SelectedDayFrom);
+            else
+                msg = "Nie możesz rezerwować przeszłości";
+                
+            MessageBox.Show(msg);
         }
+        private void BookTo(object sender, RoutedEventArgs e)
+        {
+            string msg;
+
+            if (SelectedDayTo == null)
+                msg = "Nie wybrałeś dnia 'do'.";
+            else if (SelectedDayTo > SelectedDayFrom)
+                msg = string.Format("Zarezerwowano do {0:D}", SelectedDayTo);
+            else
+                msg = "Musisz zarezerwować pokój co najmniej na 1 dzień.";
+
+
+            MessageBox.Show(msg);
+        }
+        // todo
+        // checkboxy
+        // sądzę że to może się przydać https://www.youtube.com/watch?v=VHSIAz-WVDA
+        // trzeba zrobić pobieranie wartości z każdego checkboxa do zmiennej, a następnie do tablicy checkboxArray
+        // i wysłać zapytanie do bazy o zwrócenie pokoju, lub podobnie
+
+        // otworzenie połączenia z bazą, jeżeli nie wyrzuci żadnego błędu i wszystkie pola są wypełnione.
+
+        // zapytanie - wszystkie zmienne (dataFrom, dataTo, peopleAmount (czyli suma adultsAmount + childrenAmount),
+
+        // i każde poszczególne "extrasy". Można to będzie zrobić albo stringiem,
+        // np string extrasValues = "000000" i później każdy poszczególny zaznaczony checkbox
+        // by modyfikował(nadpisywał) poszczególny index "1" jeżeli true,
+        // lub zostawiał "0" jeśli false, czyli np string by wyglądał później "010111" i  następnie splitował każdy index przecinkiem,
+        // żeby powstało "0", "1", "0", "1", "1", "1"
+        // jak wydaje się za bardzo pokręcone, można to pewnie rozkminić w inny sposób, ale taki wpadł mi do głowy
     }
+
+
 }
+
