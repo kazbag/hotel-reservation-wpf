@@ -63,7 +63,7 @@ namespace wpflogin
         private void BookBtn_OnClick(object sender, RoutedEventArgs e)
         {
             string[] dataArray = new string[4] { clientNameString, clientSecondNameString, clientPhoneString, clientEmailString };
-            string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+            string MSDEconn = (@"Data source=DESKTOP-770AKRK\SQLEXPRESS; Initial Catalog=loginDB; Integrated Security=True;");
                
             string query = "INSERT INTO zamowienia VALUES ( @Imie, @Nazwisko, @TELEFON, @Email)";
             SqlConnection connection = new SqlConnection(MSDEconn);          
