@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace wpflogin
 {
@@ -20,12 +21,33 @@ namespace wpflogin
     /// </summary>
     public partial class RoomsWindow : Window
     {
-        public string clientNameString;
-        public string clientPhnoneString;
-        public string clientSecondNameString;
-        public string clientEmailString;
+         string clientNameString;
+         string clientSecondNameString;
+         string clientPhnoneString;
+         string clientEmailString;
 
- 
+        public string ClientNameString
+        {
+            get => clientNameString;
+            
+        }
+     
+        public string ClientSecondNameString
+        {
+            get => clientSecondNameString;
+            
+        }
+        public string ClientPhnoneString
+        {
+            get => clientPhnoneString;
+            
+        }
+        public string ClientEmailString
+        {
+            get => clientEmailString;
+            
+        }
+
 
         private void goBack()
         {
@@ -41,38 +63,61 @@ namespace wpflogin
         private void BookBtn_OnClick(object sender, RoutedEventArgs e)
         {
             
+            string[] dateArray = new string[4] { clientNameTxt.Text, clientPhoneTxt.Text, clientSecondNameTxt.Text, clientEmailTxt.Text };
+            /*
+            SqlConnection sqlCon = new SqlConnection(@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+            
+            
+              
+                    sqlCon.Open();
+               
+
+                String query = "INSERT INTO [zamowienia] ( [[Imie],[Nazwisko],[TELEFON],[Email]) " +
+                    "VALUES (dateArray[0],dateArray[2],dateArray[1],dateArray[3] )";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+            sqlCon.Close();
+                */
+
             MessageBox.Show("Zarezerwowano.");
-            string[] dateArray = new string[4] { clientNameString, clientPhnoneString, clientSecondNameString, clientEmailString };
+
+            //string[] dateArray = new string[4] { clientNameString, clientPhnoneString, clientSecondNameString, clientEmailString };
+            
+            
+            
+                string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+                
+            string query = "INSERT INTO [zamowienia] ( [[Imie],[Nazwisko],[TELEFON],[Email]) " +
+                    "VALUES (dateArray[0],dateArray[2],dateArray[1],dateArray[3] )";
+            SqlConnection connection = new SqlConnection(MSDEconn);
 
             
-            SqlConnection MSDEconn = new SqlConnection(@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
-            MSDEconn.Open();
-            SqlCommand MSDEcommand = new SqlCommand();
-            MSDEcommand.Connection = MSDEconn;
+            SqlCommand sqlCmd = new SqlCommand(query, connection);
+            connection.Open();
 
-            MSDEcommand.CommandText = "INSERT INTO [zamowienia] ( [[Imie],[Nazwisko],[TELEFON],[Email]) " +
-                "VALUES (1,dateArray[0],dateArray[2],dateArray[1],dateArray[3] )";
-            MSDEcommand.ExecuteNonQuery();
-            MSDEconn.Close();
-
-          
+            sqlCmd.ExecuteNonQuery();
             
-           
+                connection.Close();
+ 
             goBack();
         }
 
         private void GoBackBtn_OnClick(object sender, RoutedEventArgs e)
         {
+
+           
             goBack();
+
             //MainWindow main = new MainWindow();
             //main.Show();
             //this.Close();
 
         }
         //sprawdzanie poprawnosci wprowadzonych danych oraz zapisywanie ich do zmiennych publicznych
+        
         private void ClientNameTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
-             clientNameString = clientNameTxt.Text;
+
+            clientNameString = clientNameTxt.Text;
             if (clientNameString.Length > 50) throw new IndexOutOfRangeException("Imie nie moze przekraczac 50 znakow");   
         }
 
@@ -89,7 +134,7 @@ namespace wpflogin
 
         private void ClientSecondNameTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
-             clientSecondNameString = clientSecondNameTxt.Text;
+            clientSecondNameString = clientSecondNameTxt.Text;
             if (clientSecondNameString.Length > 50) throw new IndexOutOfRangeException("Nazwisko nie moze przekraczac 50 znakow");
         }
 
@@ -98,5 +143,6 @@ namespace wpflogin
              clientEmailString = clientEmailTxt.Text;
             if (clientEmailString.Length > 50) throw new IndexOutOfRangeException("Email nie moze przekraczac 50 znakow");
         }
+        
     }
 }
