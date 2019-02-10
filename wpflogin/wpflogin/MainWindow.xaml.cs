@@ -140,34 +140,6 @@ namespace wpflogin
                     $"\r\n Śniadanie do łóżka: {MainWindow.CheckBoxNamesConverter(breakfastToBedCheckBox)}"
                     );
 
-
-
-                /*string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
-
-                string query = "INSERT INTO klienci VALUES ( @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
-                    "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed)";
-                SqlConnection connection = new SqlConnection(MSDEconn);
-                SqlCommand command = new SqlCommand(query, connection);
-
-                connection.Open();
-
-                // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
-
-
-                command.Parameters.AddWithValue("@ReservedSince", checkboxArray[0]);
-                command.Parameters.AddWithValue("@ReservedTo", checkboxArray[1]);
-                command.Parameters.AddWithValue("@PeopleAmount", checkboxArray[2]);
-                command.Parameters.AddWithValue("@WakeUp", checkboxArray[3]);
-                command.Parameters.AddWithValue("@Fridge", checkboxArray[4]);
-                command.Parameters.AddWithValue("@Safe", checkboxArray[5]);
-                command.Parameters.AddWithValue("@ChildBed", checkboxArray[6]);
-                command.Parameters.AddWithValue("@CoffeeMachine", checkboxArray[7]);
-                command.Parameters.AddWithValue("@BreakfastToBed", checkboxArray[8]);
-
-                command.ExecuteNonQuery();
-
-                connection.Close();*/
-
                 goBack();
 
             }
@@ -190,9 +162,6 @@ namespace wpflogin
             }
 
         }
-
-
-
 
         // todo
         // trzeba zrzucić do bazy -od i -do
