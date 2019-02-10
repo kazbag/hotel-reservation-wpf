@@ -125,7 +125,7 @@ namespace wpflogin
                 // zapisanie wartosci checkboxow w tablicy
                 string[] checkboxArray = new string[9] { selectedDayFromString, selectedDayToString, currentValue.ToString(),
                     wakeUpCheckbox.ToString(), fridgeCheckbox.ToString(),safeCheckBox.ToString(),
-                    childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBed.ToString() };
+                    childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBedCheckBox.ToString() };
 
                 // wyswietlenie komunikatu potwierdzanjacego wybrane opcje
                 MessageBox.Show(
@@ -142,7 +142,7 @@ namespace wpflogin
 
 
 
-                /*string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+                string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
 
                 string query = "INSERT INTO klienci VALUES ( @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
                     "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed)";
@@ -166,7 +166,7 @@ namespace wpflogin
 
                 command.ExecuteNonQuery();
 
-                connection.Close();*/
+                connection.Close();
 
                 goBack();
 

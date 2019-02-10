@@ -28,7 +28,7 @@ namespace wpflogin
 
         private void BtnSubmit_OnClick(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlCon = new SqlConnection(@"Data source=LAPTOP-FAVOJHU6\SQLEXPRESS; Initial Catalog=dzban_database; Integrated Security=True;");
+            SqlConnection sqlCon = new SqlConnection(@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
 
             try
             {
