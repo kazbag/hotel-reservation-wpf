@@ -45,18 +45,18 @@
 
                 <StackPanel Margin="10 0" Grid.Column="0">
                     <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Imię"></Label>
-                    <TextBox Name="clientNameTxt" FontSize="18" Padding="10" Margin="0 10"></TextBox>
+                    <TextBox Name="clientNameTxt" FontSize="18" Padding="10" Margin="0 10" TextChanged="ClientNameTxt_TextChanged"></TextBox>
                     <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Nazwisko"></Label>
-                    <TextBox Name="clientSecondNameTxt" FontSize="18" Padding="10" Margin="0 10"></TextBox>
+                    <TextBox Name="clientSecondNameTxt" FontSize="18" Padding="10" Margin="0 10" TextChanged="ClientSecondNameTxt_TextChanged"></TextBox>
                 </StackPanel>
 
             <!--telefon i email-->
 
                 <StackPanel Margin="10 0" Grid.Column="1">
                     <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Telefon"></Label>
-                    <TextBox Name="clientPhoneTxt" FontSize="18" Padding="10" Margin="0 10"></TextBox>
+                    <TextBox Name="clientPhoneTxt" FontSize="18" Padding="10" Margin="0 10" TextChanged="ClientPhoneTxt_TextChanged"></TextBox>
                     <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Email"></Label>
-                    <TextBox Name="clientEmailTxt" FontSize="18" Padding="10" Margin="0 10"></TextBox>
+                    <TextBox Name="clientEmailTxt" FontSize="18" Padding="10" Margin="0 10" TextChanged="ClientEmailTxt_TextChanged"></TextBox>
                 </StackPanel>
             </Grid>
 

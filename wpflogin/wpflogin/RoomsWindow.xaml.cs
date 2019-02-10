@@ -19,6 +19,11 @@ namespace wpflogin
     /// </summary>
     public partial class RoomsWindow : Window
     {
+        public string clientNameString;
+        public string clientPhnoneString;
+        public string clientSecondNameString;
+        public string clientEmailString;
+
         private void goBack()
         {
             MainWindow main = new MainWindow();
@@ -33,6 +38,7 @@ namespace wpflogin
         private void BookBtn_OnClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Zarezerwowano.");
+            string[] dateArray = new string[4] { clientNameString, clientPhnoneString, clientSecondNameString, clientEmailString };
             goBack();
         }
 
@@ -43,6 +49,35 @@ namespace wpflogin
             //main.Show();
             //this.Close();
 
+        }
+
+        private void ClientNameTxt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+             clientNameString = clientNameTxt.Text;
+            if (clientNameString.Length > 50) throw new IndexOutOfRangeException("Imie nie moze przekraczac 50 znakow");   
+        }
+
+        private void ClientPhoneTxt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+             clientPhnoneString = clientPhoneTxt.Text;
+            double j;
+            if (Double.TryParse(clientPhnoneString, out j))
+                clientPhnoneString = j.ToString();
+            else
+                MessageBox.Show("Niepoprawny format wprowadzonych danych");
+            
+        }
+
+        private void ClientSecondNameTxt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+             clientSecondNameString = clientSecondNameTxt.Text;
+            if (clientSecondNameString.Length > 50) throw new IndexOutOfRangeException("Nazwisko nie moze przekraczac 50 znakow");
+        }
+
+        private void ClientEmailTxt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+             clientEmailString = clientEmailTxt.Text;
+            if (clientEmailString.Length > 50) throw new IndexOutOfRangeException("Email nie moze przekraczac 50 znakow");
         }
     }
 }
