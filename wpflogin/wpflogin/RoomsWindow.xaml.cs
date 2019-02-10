@@ -23,7 +23,7 @@ namespace wpflogin
     {
          string clientNameString;
          string clientSecondNameString;
-         string clientPhnoneString;
+         string clientPhoneString;
          string clientEmailString;
 
         public string ClientNameString
@@ -39,7 +39,7 @@ namespace wpflogin
         }
         public string ClientPhnoneString
         {
-            get => clientPhnoneString;
+            get => clientPhoneString;
             
         }
         public string ClientEmailString
@@ -62,7 +62,8 @@ namespace wpflogin
 
         private void BookBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            string MSDEconn = (@"Data source=DESKTOP-770AKRK\SQLEXPRESS; Initial Catalog=LoginDB; Integrated Security=True;");
+            string[] dataArray = new string[4] { clientNameString, clientSecondNameString, clientPhoneString, clientEmailString };
+            string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
                
             string query = "INSERT INTO zamowienia VALUES (@id, @Imie, @Nazwisko, @TELEFON, @Email)";
             SqlConnection connection = new SqlConnection(MSDEconn);          
@@ -72,15 +73,17 @@ namespace wpflogin
  
             // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
  
-            command.Parameters.AddWithValue("@id", 11244);
-            command.Parameters.AddWithValue("@Imie", clientNameString);
-            command.Parameters.AddWithValue("@Nazwisko", clientSecondNameString);
-            command.Parameters.AddWithValue("@TELEFON", clientPhnoneString);
-            command.Parameters.AddWithValue("@Email", clientEmailString);
+            command.Parameters.AddWithValue("@id", 114);
+            command.Parameters.AddWithValue("@Imie", dataArray[0]);
+            command.Parameters.AddWithValue("@Nazwisko", dataArray[1]);
+            command.Parameters.AddWithValue("@TELEFON", dataArray[2]);
+            command.Parameters.AddWithValue("@Email", dataArray[3]);
  
                 command.ExecuteNonQuery();
            
                 connection.Close();
+           
+
  
             MessageBox.Show("Zarezerwowano.");
             goBack();
@@ -101,10 +104,10 @@ namespace wpflogin
 
         private void ClientPhoneTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
-             clientPhnoneString = clientPhoneTxt.Text;
+             clientPhoneString = clientPhoneTxt.Text;
             double j;
-            if (Double.TryParse(clientPhnoneString, out j))
-                clientPhnoneString = j.ToString();
+            if (Double.TryParse(clientPhoneString, out j))
+                clientPhoneString = j.ToString();
             else
                 MessageBox.Show("Niepoprawny format wprowadzonych danych");
             
