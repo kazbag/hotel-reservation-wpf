@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data.SqlClient;
 
 namespace wpflogin
 {
@@ -23,6 +24,8 @@ namespace wpflogin
         public string clientPhnoneString;
         public string clientSecondNameString;
         public string clientEmailString;
+
+ 
 
         private void goBack()
         {
@@ -37,8 +40,24 @@ namespace wpflogin
 
         private void BookBtn_OnClick(object sender, RoutedEventArgs e)
         {
+            
             MessageBox.Show("Zarezerwowano.");
             string[] dateArray = new string[4] { clientNameString, clientPhnoneString, clientSecondNameString, clientEmailString };
+
+            
+            SqlConnection MSDEconn = new SqlConnection(@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+            MSDEconn.Open();
+            SqlCommand MSDEcommand = new SqlCommand();
+            MSDEcommand.Connection = MSDEconn;
+
+            MSDEcommand.CommandText = "INSERT INTO [zamowienia] ( [[Imie],[Nazwisko],[TELEFON],[Email]) " +
+                "VALUES (1,dateArray[0],dateArray[2],dateArray[1],dateArray[3] )";
+            MSDEcommand.ExecuteNonQuery();
+            MSDEconn.Close();
+
+          
+            
+           
             goBack();
         }
 
@@ -50,7 +69,7 @@ namespace wpflogin
             //this.Close();
 
         }
-
+        //sprawdzanie poprawnosci wprowadzonych danych oraz zapisywanie ich do zmiennych publicznych
         private void ClientNameTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
              clientNameString = clientNameTxt.Text;
