@@ -62,55 +62,33 @@ namespace wpflogin
 
         private void BookBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            
-            string[] dateArray = new string[4] { clientNameTxt.Text, clientPhoneTxt.Text, clientSecondNameTxt.Text, clientEmailTxt.Text };
-            /*
-            SqlConnection sqlCon = new SqlConnection(@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
-            
-            
-              
-                    sqlCon.Open();
+            string MSDEconn = (@"Data source=DESKTOP-770AKRK\SQLEXPRESS; Initial Catalog=LoginDB; Integrated Security=True;");
                
-
-                String query = "INSERT INTO [zamowienia] ( [[Imie],[Nazwisko],[TELEFON],[Email]) " +
-                    "VALUES (dateArray[0],dateArray[2],dateArray[1],dateArray[3] )";
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-            sqlCon.Close();
-                */
-
-            MessageBox.Show("Zarezerwowano.");
-
-            //string[] dateArray = new string[4] { clientNameString, clientPhnoneString, clientSecondNameString, clientEmailString };
-            
-            
-            
-                string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
-                
-            string query = "INSERT INTO [zamowienia] ( [[Imie],[Nazwisko],[TELEFON],[Email]) " +
-                    "VALUES (dateArray[0],dateArray[2],dateArray[1],dateArray[3] )";
-            SqlConnection connection = new SqlConnection(MSDEconn);
-
-            
-            SqlCommand sqlCmd = new SqlCommand(query, connection);
+            string query = "INSERT INTO zamowienia VALUES (@id, @Imie, @Nazwisko, @TELEFON, @Email)";
+            SqlConnection connection = new SqlConnection(MSDEconn);          
+            SqlCommand command = new SqlCommand(query, connection);
+ 
             connection.Open();
-
-            sqlCmd.ExecuteNonQuery();
-            
+ 
+            // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
+ 
+            command.Parameters.AddWithValue("@id", 11244);
+            command.Parameters.AddWithValue("@Imie", clientNameString);
+            command.Parameters.AddWithValue("@Nazwisko", clientSecondNameString);
+            command.Parameters.AddWithValue("@TELEFON", clientPhnoneString);
+            command.Parameters.AddWithValue("@Email", clientEmailString);
+ 
+                command.ExecuteNonQuery();
+           
                 connection.Close();
  
+            MessageBox.Show("Zarezerwowano.");
             goBack();
         }
 
         private void GoBackBtn_OnClick(object sender, RoutedEventArgs e)
-        {
-
-           
+        {  
             goBack();
-
-            //MainWindow main = new MainWindow();
-            //main.Show();
-            //this.Close();
-
         }
         //sprawdzanie poprawnosci wprowadzonych danych oraz zapisywanie ich do zmiennych publicznych
         
