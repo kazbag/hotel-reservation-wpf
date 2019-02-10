@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,8 @@ namespace wpflogin
     {
         public DateTime? SelectedDayFrom { get; set; }
         public DateTime? SelectedDayTo { get; set; }
+
+       
 
         public MainWindow()
         {
@@ -58,26 +62,54 @@ namespace wpflogin
         private void BtnCheck_OnClick(object sender, RoutedEventArgs e)
         {
 
-            if (Convert.ToByte(adultsCombobox.SelectedIndex.ToString()) == 0 && Convert.ToByte(childrenCombobox.SelectedIndex.ToString()) == 0)
-            {
+                if (Convert.ToByte(adultsCombobox.SelectedIndex.ToString()) == 0 
+                && Convert.ToByte(childrenCombobox.SelectedIndex.ToString()) == 0)
+                {
                 MessageBox.Show("Nie możesz zarezerwować pokoju 0 osobowego.");
-            }
-            else
-            {
+                }
+                else
+                {
             string currentValueFromAdultsCombobox = adultsCombobox.SelectedIndex.ToString();
             string currentValueFromChildrenCombobox = childrenCombobox.SelectedIndex.ToString();
 
-            int currentValue = (Convert.ToInt16(currentValueFromAdultsCombobox) + Convert.ToInt16(currentValueFromChildrenCombobox));
+            int currentValue = (Convert.ToInt16(currentValueFromAdultsCombobox) + 
+                    Convert.ToInt16(currentValueFromChildrenCombobox));
                 // tylko wyświetla liczbę osób, sprawdzenie czy jest ok. można wyrzucić.
-            MessageBox.Show(currentValue + " osób");
-            //RoomsWindow rooms = new RoomsWindow();
-            //rooms.Show();
-            //this.Close();
-            goBack();
+
+                //przypisywanie wartosci checkboxow do zmiennych
+            string selectedDayFromString = SelectedDayFrom.ToString();
+            string selectedDayToString = SelectedDayTo.ToString();
+            bool wakeUpCheckbox, fridgeCheckbox, safeCheckBox, childBedCheckBox,
+                 coffeeMachineCheckBox, breakfastToBedCheckBox;
+                    if (wakeUp.IsChecked == true) wakeUpCheckbox = true;
+                    else wakeUpCheckbox = false;
+                    if (fridge.IsChecked == true) fridgeCheckbox = true;
+                    else fridgeCheckbox = false;
+                    if (safe.IsChecked == true) safeCheckBox = true;
+                    else safeCheckBox = false;
+                    if (childBed.IsChecked == true) childBedCheckBox = true;
+                    else childBedCheckBox = false;
+                    if (coffeeMachine.IsChecked == true) coffeeMachineCheckBox = true;
+                    else coffeeMachineCheckBox = false;
+                    if (breakfastToBed.IsChecked == true) breakfastToBedCheckBox = true;
+                    else breakfastToBedCheckBox = false;
+                // zapisanie wartosci checkboxow w tablicy
+                string[] checkboxArray = new string[9] { selectedDayFromString, selectedDayToString, currentValue.ToString(),
+                    wakeUpCheckbox.ToString(), fridgeCheckbox.ToString(),safeCheckBox.ToString(),
+                    childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBed.ToString() };
+             
+                // wyswietlenie komunikatu potwierdzanjacego wybrane opcje
+                MessageBox.Show($" ilość osób: {currentValue}\r\n początek rezerwacji: {selectedDayFromString}\r\n " +
+                    $"koniec rezerwacji: {selectedDayToString}\r\n pobudka: {wakeUpCheckbox}\r\n " +
+                    $"lodówka: {fridgeCheckbox}\r\n sejf: {safeCheckBox}\r\n łóżeczko dla dziecka: {childBedCheckBox}\r\n " +
+                    $"ekspres do kawy: {coffeeMachineCheckBox}\r\n śniadanie do łóżka: {breakfastToBedCheckBox}");
+                goBack();
             }
             
         }
 
+      
+       
 
         // todo
         // trzeba zrzucić do bazy -od i -do
@@ -106,7 +138,6 @@ namespace wpflogin
                 msg = string.Format("Zarezerwowano do {0:D}", SelectedDayTo);
             else
                 msg = "Musisz zarezerwować pokój co najmniej na 1 dzień.";
-
 
             MessageBox.Show(msg);
         }
