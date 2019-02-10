@@ -94,21 +94,51 @@ namespace wpflogin
                     if (breakfastToBed.IsChecked == true) breakfastToBedCheckBox = true;
                     else breakfastToBedCheckBox = false;
                 // zapisanie wartosci checkboxow w tablicy
-                string[] checkboxArray = new string[9] { selectedDayFromString, selectedDayToString, currentValue.ToString(),
+                string[] checkboxArray = new string[9] { selectedDayFromString.ToString(), selectedDayToString.ToString(), currentValue.ToString(),
                     wakeUpCheckbox.ToString(), fridgeCheckbox.ToString(),safeCheckBox.ToString(),
-                    childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBed.ToString() };
+                    childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBedCheckBox.ToString() };
              
                 // wyswietlenie komunikatu potwierdzanjacego wybrane opcje
                 MessageBox.Show($" ilość osób: {currentValue}\r\n początek rezerwacji: {selectedDayFromString}\r\n " +
                     $"koniec rezerwacji: {selectedDayToString}\r\n pobudka: {wakeUpCheckbox}\r\n " +
                     $"lodówka: {fridgeCheckbox}\r\n sejf: {safeCheckBox}\r\n łóżeczko dla dziecka: {childBedCheckBox}\r\n " +
                     $"ekspres do kawy: {coffeeMachineCheckBox}\r\n śniadanie do łóżka: {breakfastToBedCheckBox}");
+
+                
+                
+                string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+
+                string query = "INSERT INTO klienci VALUES (@ID, @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
+                    "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed)";
+                SqlConnection connection = new SqlConnection(MSDEconn);
+                SqlCommand command = new SqlCommand(query, connection);
+
+                connection.Open();
+
+                // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
+
+                command.Parameters.AddWithValue("@ID", 174);
+                command.Parameters.AddWithValue("@ReservedSince", checkboxArray[0]);
+                command.Parameters.AddWithValue("@ReservedTo", checkboxArray[1]);
+                command.Parameters.AddWithValue("@PeopleAmount", checkboxArray[2]);
+                command.Parameters.AddWithValue("@WakeUp", checkboxArray[3]);
+                command.Parameters.AddWithValue("@Fridge", checkboxArray[4]);
+                command.Parameters.AddWithValue("@Safe", checkboxArray[5]);
+                command.Parameters.AddWithValue("@ChildBed", checkboxArray[6]);
+                command.Parameters.AddWithValue("@CoffeeMachine", checkboxArray[7]);
+                command.Parameters.AddWithValue("@BreakfastToBed", checkboxArray[8]);
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+                
                 goBack();
+
             }
             
         }
 
-      
+     
        
 
         // todo
