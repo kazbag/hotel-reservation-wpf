@@ -28,7 +28,7 @@ namespace wpflogin
 
         private void BtnSubmit_OnClick(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlCon = new SqlConnection(@"Data source=DESKTOP-770AKRK\SQLEXPRESS; Initial Catalog=LoginDB; Integrated Security=True;");
+            SqlConnection sqlCon = new SqlConnection(@"Data source=LAPTOP-FAVOJHU6\SQLEXPRESS; Initial Catalog=dzban_database; Integrated Security=True;");
 
             try
             {
@@ -37,7 +37,7 @@ namespace wpflogin
                     sqlCon.Open();
                 }
 
-                String query = "SELECT COUNT(1) FROM tblUser WHERE Username=@Username AND Password=@Password";
+                String query = "SELECT COUNT(1) FROM pracownicy WHERE Username=@Username AND Password=@Password";
                 SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@Username", txtUsername.Text);

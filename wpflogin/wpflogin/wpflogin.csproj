@@ -54,10 +54,11 @@
     <ApplicationIcon>Google-Noto-Emoji-Travel-Places-42493-hotel.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>5DFCD4455920261EB8BE94599766BC577EF624F0</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>8D105533405E8A5651950E9D0154987ECFA7FF82</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>wpflogin_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>

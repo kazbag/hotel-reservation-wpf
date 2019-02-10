@@ -26,7 +26,7 @@ namespace wpflogin
         public DateTime? SelectedDayFrom { get; set; }
         public DateTime? SelectedDayTo { get; set; }
 
-       
+
 
         public MainWindow()
         {
@@ -62,51 +62,87 @@ namespace wpflogin
         private void BtnCheck_OnClick(object sender, RoutedEventArgs e)
         {
 
-                if (Convert.ToByte(adultsCombobox.SelectedIndex.ToString()) == 0 
-                && Convert.ToByte(childrenCombobox.SelectedIndex.ToString()) == 0)
-                {
-                MessageBox.Show("Nie możesz zarezerwować pokoju 0 osobowego.");
-                }
-                else
-                {
-            string currentValueFromAdultsCombobox = adultsCombobox.SelectedIndex.ToString();
-            string currentValueFromChildrenCombobox = childrenCombobox.SelectedIndex.ToString();
+            //przypisuje wartości z daty do zmniennych
 
-            int currentValue = (Convert.ToInt16(currentValueFromAdultsCombobox) + 
-                    Convert.ToInt16(currentValueFromChildrenCombobox));
+            string selectedDayFromString = SelectedDayFrom.ToString();
+            string selectedDayToString = SelectedDayTo.ToString();
+
+            //sprawdza logiczność wyborów
+
+            if (Convert.ToByte(adultsCombobox.SelectedIndex.ToString()) == 0
+                && Convert.ToByte(childrenCombobox.SelectedIndex.ToString()) == 0)
+            {
+                MessageBox.Show("Błąd: Nie możesz zarezerwować pokoju 0 osobowego.");
+            }
+            else if (selectedDayFromString == "")
+            {
+                MessageBox.Show("Błąd: Nie wybrano daty początku rezerwacji");
+            }
+            else if (selectedDayToString == "")
+            {
+                MessageBox.Show("Błąd: Nie wybrano daty końca rezerwacji");
+            }
+            else if (selectedDayToString == selectedDayFromString)
+            {
+                MessageBox.Show("Błąd: Nie możesz zarezerwować pokoju na 0 dni");
+            }
+
+            else if (SelectedDayTo < SelectedDayFrom)
+            {
+                MessageBox.Show("Błąd: Data końca rezerwacji jest wcześniej niż początku rezerwacji");
+            }
+
+            else if (SelectedDayFrom < DateTime.Today)
+            {
+                MessageBox.Show("Błąd: Nie możesz zarezerwować przeszłości");
+            }
+
+            else
+            {
+                string currentValueFromAdultsCombobox = adultsCombobox.SelectedIndex.ToString();
+                string currentValueFromChildrenCombobox = childrenCombobox.SelectedIndex.ToString();
+
+                int currentValue = (Convert.ToInt16(currentValueFromAdultsCombobox) +
+                        Convert.ToInt16(currentValueFromChildrenCombobox));
                 // tylko wyświetla liczbę osób, sprawdzenie czy jest ok. można wyrzucić.
 
                 //przypisywanie wartosci checkboxow do zmiennych
-            string selectedDayFromString = SelectedDayFrom.ToString();
-            string selectedDayToString = SelectedDayTo.ToString();
-            bool wakeUpCheckbox, fridgeCheckbox, safeCheckBox, childBedCheckBox,
-                 coffeeMachineCheckBox, breakfastToBedCheckBox;
-                    if (wakeUp.IsChecked == true) wakeUpCheckbox = true;
-                    else wakeUpCheckbox = false;
-                    if (fridge.IsChecked == true) fridgeCheckbox = true;
-                    else fridgeCheckbox = false;
-                    if (safe.IsChecked == true) safeCheckBox = true;
-                    else safeCheckBox = false;
-                    if (childBed.IsChecked == true) childBedCheckBox = true;
-                    else childBedCheckBox = false;
-                    if (coffeeMachine.IsChecked == true) coffeeMachineCheckBox = true;
-                    else coffeeMachineCheckBox = false;
-                    if (breakfastToBed.IsChecked == true) breakfastToBedCheckBox = true;
-                    else breakfastToBedCheckBox = false;
-                // zapisanie wartosci checkboxow w tablicy
-                string[] checkboxArray = new string[9] { selectedDayFromString.ToString(), selectedDayToString.ToString(), currentValue.ToString(),
-                    wakeUpCheckbox.ToString(), fridgeCheckbox.ToString(),safeCheckBox.ToString(),
-                    childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBedCheckBox.ToString() };
-             
-                // wyswietlenie komunikatu potwierdzanjacego wybrane opcje
-                MessageBox.Show($" ilość osób: {currentValue}\r\n początek rezerwacji: {selectedDayFromString}\r\n " +
-                    $"koniec rezerwacji: {selectedDayToString}\r\n pobudka: {wakeUpCheckbox}\r\n " +
-                    $"lodówka: {fridgeCheckbox}\r\n sejf: {safeCheckBox}\r\n łóżeczko dla dziecka: {childBedCheckBox}\r\n " +
-                    $"ekspres do kawy: {coffeeMachineCheckBox}\r\n śniadanie do łóżka: {breakfastToBedCheckBox}");
 
-                
-                
-                string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+                bool wakeUpCheckbox, fridgeCheckbox, safeCheckBox, childBedCheckBox,
+                     coffeeMachineCheckBox, breakfastToBedCheckBox;
+                if (wakeUp.IsChecked == true) wakeUpCheckbox = true;
+                else wakeUpCheckbox = false;
+                if (fridge.IsChecked == true) fridgeCheckbox = true;
+                else fridgeCheckbox = false;
+                if (safe.IsChecked == true) safeCheckBox = true;
+                else safeCheckBox = false;
+                if (childBed.IsChecked == true) childBedCheckBox = true;
+                else childBedCheckBox = false;
+                if (coffeeMachine.IsChecked == true) coffeeMachineCheckBox = true;
+                else coffeeMachineCheckBox = false;
+                if (breakfastToBed.IsChecked == true) breakfastToBedCheckBox = true;
+                else breakfastToBedCheckBox = false;
+                // zapisanie wartosci checkboxow w tablicy
+                string[] checkboxArray = new string[9] { selectedDayFromString, selectedDayToString, currentValue.ToString(),
+                    wakeUpCheckbox.ToString(), fridgeCheckbox.ToString(),safeCheckBox.ToString(),
+                    childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBed.ToString() };
+
+                // wyswietlenie komunikatu potwierdzanjacego wybrane opcje
+                MessageBox.Show(
+                    $" Ilość osób: {currentValue}" +
+                    $"\r\n Początek rezerwacji: {selectedDayFromString}" +
+                    $"\r\n Koniec rezerwacji: {selectedDayToString}" +
+                    $"\r\n Pobudka: {MainWindow.CheckBoxNamesConverter(wakeUpCheckbox)}" +
+                    $"\r\n Lodówka: {MainWindow.CheckBoxNamesConverter(fridgeCheckbox)}" +
+                    $"\r\n Sejf: {MainWindow.CheckBoxNamesConverter(safeCheckBox)}" +
+                    $"\r\n Łóżeczko dla dziecka: {MainWindow.CheckBoxNamesConverter(childBedCheckBox)}" +
+                    $"\r\n Ekspres do kawy: {MainWindow.CheckBoxNamesConverter(coffeeMachineCheckBox)}" +
+                    $"\r\n Śniadanie do łóżka: {MainWindow.CheckBoxNamesConverter(breakfastToBedCheckBox)}"
+                    );
+
+
+
+                /*string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
 
                 string query = "INSERT INTO klienci VALUES ( @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
                     "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed)";
@@ -117,7 +153,7 @@ namespace wpflogin
 
                 // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
 
-               
+
                 command.Parameters.AddWithValue("@ReservedSince", checkboxArray[0]);
                 command.Parameters.AddWithValue("@ReservedTo", checkboxArray[1]);
                 command.Parameters.AddWithValue("@PeopleAmount", checkboxArray[2]);
@@ -130,16 +166,33 @@ namespace wpflogin
 
                 command.ExecuteNonQuery();
 
-                connection.Close();
-                
+                connection.Close();*/
+
                 goBack();
 
             }
-            
+
+
         }
 
-     
-       
+        // Zamienia wartości boolowskie na stringi dla funkcji BtnCheck_OnClick
+
+        private static string CheckBoxNamesConverter(bool TakCzyNie)
+        {
+
+            if (TakCzyNie == true)
+            {
+                return "Tak";
+            }
+            else
+            {
+                return "Nie";
+            }
+
+        }
+
+
+
 
         // todo
         // trzeba zrzucić do bazy -od i -do
@@ -155,7 +208,7 @@ namespace wpflogin
                 msg = string.Format("Rezerwuję {0:D}", SelectedDayFrom);
             else
                 msg = "Nie możesz rezerwować przeszłości";
-                
+
             MessageBox.Show(msg);
         }
         private void BookTo(object sender, RoutedEventArgs e)
@@ -188,6 +241,7 @@ namespace wpflogin
         // żeby powstało "0", "1", "0", "1", "1", "1"
         // jak wydaje się za bardzo pokręcone, można to pewnie rozkminić w inny sposób, ale taki wpadł mi do głowy
     }
+
 
 
 }
