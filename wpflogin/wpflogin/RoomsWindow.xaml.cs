@@ -65,7 +65,7 @@ namespace wpflogin
             string[] dataArray = new string[4] { clientNameString, clientSecondNameString, clientPhoneString, clientEmailString };
             string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
                
-            string query = "INSERT INTO zamowienia VALUES (@id, @Imie, @Nazwisko, @TELEFON, @Email)";
+            string query = "INSERT INTO zamowienia VALUES ( @Imie, @Nazwisko, @TELEFON, @Email)";
             SqlConnection connection = new SqlConnection(MSDEconn);          
             SqlCommand command = new SqlCommand(query, connection);
  
@@ -73,7 +73,7 @@ namespace wpflogin
  
             // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
  
-            command.Parameters.AddWithValue("@id", 114);
+           
             command.Parameters.AddWithValue("@Imie", dataArray[0]);
             command.Parameters.AddWithValue("@Nazwisko", dataArray[1]);
             command.Parameters.AddWithValue("@TELEFON", dataArray[2]);
