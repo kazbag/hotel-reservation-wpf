@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Configuration;
 
 namespace wpflogin
 {
@@ -27,8 +28,10 @@ namespace wpflogin
         }
 
         private void BtnSubmit_OnClick(object sender, RoutedEventArgs e)
+
         {
-            SqlConnection sqlCon = new SqlConnection(@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+            string conn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+        SqlConnection sqlCon = new SqlConnection(conn);
 
             try
             {

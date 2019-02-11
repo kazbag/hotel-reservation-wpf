@@ -54,7 +54,7 @@
     <ApplicationIcon>Google-Noto-Emoji-Travel-Places-42493-hotel.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>8D105533405E8A5651950E9D0154987ECFA7FF82</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>C798931618278E80C455EF40FB9A6650E365451E</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>
@@ -68,6 +68,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
 
 namespace wpflogin
 {
@@ -21,10 +22,12 @@ namespace wpflogin
     /// </summary>
     public partial class RoomsWindow : Window
     {
+        string[,] tablica = new string[9,100];
          string clientNameString;
          string clientSecondNameString;
          string clientPhoneString;
          string clientEmailString;
+        public string s;
 
         public string ClientNameString
         {
@@ -63,8 +66,8 @@ namespace wpflogin
         private void BookBtn_OnClick(object sender, RoutedEventArgs e)
         {
             string[] dataArray = new string[4] { clientNameString, clientSecondNameString, clientPhoneString, clientEmailString };
-            string MSDEconn = (@"Data source=DESKTOP-770AKRK\SQLEXPRESS; Initial Catalog=loginDB; Integrated Security=True;");
-               
+            string MSDEconn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+
             string query = "INSERT INTO zamowienia VALUES ( @Imie, @Nazwisko, @TELEFON, @Email)";
             SqlConnection connection = new SqlConnection(MSDEconn);          
             SqlCommand command = new SqlCommand(query, connection);
@@ -72,7 +75,7 @@ namespace wpflogin
             connection.Open();
  
             // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
- 
+    
            
             command.Parameters.AddWithValue("@Imie", dataArray[0]);
             command.Parameters.AddWithValue("@Nazwisko", dataArray[1]);
@@ -82,9 +85,34 @@ namespace wpflogin
                 command.ExecuteNonQuery();
            
                 connection.Close();
-           
+            /*
+            string MSDEconn1 = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+            string query1 = "SELECT * FROM pokoje ";
+            SqlConnection connection1 = new SqlConnection(MSDEconn1);
+            connection1.Open();
+            SqlCommand command1 = new SqlCommand(query1, connection1);
+            
+            SqlDataReader thisReader = command1.ExecuteReader();
+            
+            while (thisReader.Read())
+            {
 
- 
+                s+=(thisReader["Number_pokoju"].ToString() + " " + thisReader["Pietro"].ToString()
+                 + " " + thisReader["Liczba_osob"] + " " + thisReader["Budzenie"] + " " + thisReader["Lodowka"]
+                 + " " + thisReader["Sejf"] + " " + thisReader["Lozko_dzieciece"] + " " + thisReader["Ekspres_do_kawy"]
+                 + " " + thisReader["Sniadanie_do_lozka"]);
+            }
+             
+            thisReader.Close();
+            connection1.Close();
+
+    */
+
+
+
+
+            MessageBox.Show(s);
+    
             MessageBox.Show("Zarezerwowano.");
             goBack();
         }

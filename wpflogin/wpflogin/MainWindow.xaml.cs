@@ -15,6 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Drawing;
+using System.Configuration;
 
 namespace wpflogin
 {
@@ -123,7 +126,7 @@ namespace wpflogin
                 if (breakfastToBed.IsChecked == true) breakfastToBedCheckBox = true;
                 else breakfastToBedCheckBox = false;
                 // zapisanie wartosci checkboxow w tablicy
-                string[] checkboxArray = new string[9] { selectedDayFromString, selectedDayToString, currentValue.ToString(),
+                string[] checkboxArray = new string[9] { SelectedDayFrom.ToString(), SelectedDayTo.ToString(), currentValue.ToString(),
                     wakeUpCheckbox.ToString(), fridgeCheckbox.ToString(),safeCheckBox.ToString(),
                     childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBedCheckBox.ToString() };
 
@@ -142,11 +145,11 @@ namespace wpflogin
 
 
 
-                string MSDEconn = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
+                string conn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
 
                 string query = "INSERT INTO klienci VALUES ( @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
                     "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed)";
-                SqlConnection connection = new SqlConnection(MSDEconn);
+                SqlConnection connection = new SqlConnection(conn);
                 SqlCommand command = new SqlCommand(query, connection);
 
                 connection.Open();
@@ -223,7 +226,12 @@ namespace wpflogin
                 msg = "Musisz zarezerwować pokój co najmniej na 1 dzień.";
 
             MessageBox.Show(msg);
+
+
+
         }
+
+
         // todo
         // checkboxy
         // sądzę że to może się przydać https://www.youtube.com/watch?v=VHSIAz-WVDA
