@@ -28,6 +28,7 @@ namespace wpflogin
          string clientPhoneString;
          string clientEmailString;
         public string s;
+        public string a = "";
 
         public string ClientNameString
         {
@@ -68,21 +69,21 @@ namespace wpflogin
             string[] dataArray = new string[4] { clientNameString, clientSecondNameString, clientPhoneString, clientEmailString };
             string MSDEconn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
 
-            string query = "INSERT INTO zamowienia VALUES ( @Imie, @Nazwisko, @TELEFON, @Email)";
+            //Dodaje Danę do Ostatniego zamówienia
+            string query = "UPDATE zamowienia SET Imie = @Imie, Nazwisko = @Nazwisko, TELEFON = @TELEFON,Email=@Email WHERE Imie = @Tajemnica";
             SqlConnection connection = new SqlConnection(MSDEconn);          
             SqlCommand command = new SqlCommand(query, connection);
  
             connection.Open();
- 
-            // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
-    
            
+            command.Parameters.AddWithValue("@Tajemnica", a);
             command.Parameters.AddWithValue("@Imie", dataArray[0]);
             command.Parameters.AddWithValue("@Nazwisko", dataArray[1]);
             command.Parameters.AddWithValue("@TELEFON", dataArray[2]);
             command.Parameters.AddWithValue("@Email", dataArray[3]);
- 
-                command.ExecuteNonQuery();
+
+
+            command.ExecuteNonQuery();
            
                 connection.Close();
             /*

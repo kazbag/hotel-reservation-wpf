@@ -30,7 +30,6 @@ namespace wpflogin
         public DateTime? SelectedDayTo { get; set; }
 
 
-
         public MainWindow()
         {
             InitializeComponent();
@@ -126,7 +125,7 @@ namespace wpflogin
                 if (breakfastToBed.IsChecked == true) breakfastToBedCheckBox = true;
                 else breakfastToBedCheckBox = false;
                 // zapisanie wartosci checkboxow w tablicy
-                string[] checkboxArray = new string[9] { SelectedDayFrom.ToString(), SelectedDayTo.ToString(), currentValue.ToString(),
+                string[] checkboxArray = new string[9] { selectedDayToString, SelectedDayTo.ToString(), currentValue.ToString(),
                     wakeUpCheckbox.ToString(), fridgeCheckbox.ToString(),safeCheckBox.ToString(),
                     childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBedCheckBox.ToString() };
 
@@ -147,7 +146,7 @@ namespace wpflogin
 
                 string conn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
 
-                string query = "INSERT INTO klienci VALUES ( @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
+                string query = "INSERT INTO zamowienia VALUES ( @idPokoje,@Imie,@Nazwisko,@TELEFON,@Email, @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
                     "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed)";
                 SqlConnection connection = new SqlConnection(conn);
                 SqlCommand command = new SqlCommand(query, connection);
@@ -156,9 +155,9 @@ namespace wpflogin
 
                 // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
 
-
-                command.Parameters.AddWithValue("@ReservedSince", checkboxArray[0]);
-                command.Parameters.AddWithValue("@ReservedTo", checkboxArray[1]);
+                command.Parameters.AddWithValue("@idPokoje", 18);
+                command.Parameters.AddWithValue("@ReservedSince", SelectedDayFrom);
+                command.Parameters.AddWithValue("@ReservedTo", SelectedDayTo);
                 command.Parameters.AddWithValue("@PeopleAmount", checkboxArray[2]);
                 command.Parameters.AddWithValue("@WakeUp", checkboxArray[3]);
                 command.Parameters.AddWithValue("@Fridge", checkboxArray[4]);
@@ -166,6 +165,10 @@ namespace wpflogin
                 command.Parameters.AddWithValue("@ChildBed", checkboxArray[6]);
                 command.Parameters.AddWithValue("@CoffeeMachine", checkboxArray[7]);
                 command.Parameters.AddWithValue("@BreakfastToBed", checkboxArray[8]);
+                command.Parameters.AddWithValue("@Imie", "");
+                command.Parameters.AddWithValue("@Nazwisko", "");
+                command.Parameters.AddWithValue("@TELEFON", "");
+                command.Parameters.AddWithValue("@Email", "");
 
                 command.ExecuteNonQuery();
 
@@ -226,8 +229,6 @@ namespace wpflogin
                 msg = "Musisz zarezerwować pokój co najmniej na 1 dzień.";
 
             MessageBox.Show(msg);
-
-
 
         }
 
