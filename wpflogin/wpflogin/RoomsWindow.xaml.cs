@@ -85,7 +85,7 @@ namespace wpflogin
 
             command.ExecuteNonQuery();
            
-                connection.Close();
+            connection.Close();
             /*
             string MSDEconn1 = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
             string query1 = "SELECT * FROM pokoje ";

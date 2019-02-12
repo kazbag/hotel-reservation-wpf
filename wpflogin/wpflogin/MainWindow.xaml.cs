@@ -28,6 +28,7 @@ namespace wpflogin
     {
         public DateTime? SelectedDayFrom { get; set; }
         public DateTime? SelectedDayTo { get; set; }
+        public string s1;
 
 
         public MainWindow()
@@ -142,6 +143,51 @@ namespace wpflogin
                     $"\r\n Śniadanie do łóżka: {MainWindow.CheckBoxNamesConverter(breakfastToBedCheckBox)}"
                     );
 
+                /*string MSDEconn5 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+                string ABC = "SELECT idPokoje from pokoje where Liczba_osob >= @liczbaOsob AND Lodowka = @lodwka " +
+                    "AND Sejf = @sejf AND Lozko_dzieciece = @lozeczkoDzieciece AND Ekspres_do_kawy = @ekspres " +
+                    "AND Sniadanie_do_lozka = @sniadanie  AND Budzenie = @budzenie; ";
+                SqlConnection connection5 = new SqlConnection(MSDEconn5);
+                SqlCommand command5 = new SqlCommand(ABC, connection5);
+                connection5.Open();
+                command5.Parameters.AddWithValue("@budzenie", checkboxArray[3]);
+                command5.Parameters.AddWithValue("@liczbaOsob", checkboxArray[2]);
+                command5.Parameters.AddWithValue("@lodwka", checkboxArray[4]);
+                command5.Parameters.AddWithValue("@sejf", checkboxArray[5]);
+                command5.Parameters.AddWithValue("@lozeczkoDzieciece", checkboxArray[6]);
+                command5.Parameters.AddWithValue("@ekspres", checkboxArray[7]);
+                command5.Parameters.AddWithValue("@sniadanie", checkboxArray[8]);
+
+                SqlDataReader thisreader1 = command5.ExecuteReader();
+                while (thisreader1.Read())
+                {
+
+                    s1 += (thisreader1["idPokoje"].ToString());
+                }
+
+                thisreader1.Close();
+                connection5.Close();
+                MessageBox.Show(s1);*/
+
+
+                //"Usuwa" wszystkie błędne zamówienia
+                string MSDEconn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+                string query3 = "UPDATE zamowienia SET Imie = @Imie, Nazwisko = @Nazwisko, TELEFON = @TELEFON,Email=@Email WHERE Imie = @Tajemnica";
+                SqlConnection connection3 = new SqlConnection(MSDEconn);
+                SqlCommand command3 = new SqlCommand(query3, connection3);
+
+                connection3.Open();
+
+                command3.Parameters.AddWithValue("@Tajemnica", "");
+                command3.Parameters.AddWithValue("@Imie","X");
+                command3.Parameters.AddWithValue("@Nazwisko", "X");
+                command3.Parameters.AddWithValue("@TELEFON", "X");
+                command3.Parameters.AddWithValue("@Email", "X");
+
+
+                command3.ExecuteNonQuery();
+
+                connection3.Close();
 
 
                 string conn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
