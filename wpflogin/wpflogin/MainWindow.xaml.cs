@@ -28,7 +28,10 @@ namespace wpflogin
     {
         public DateTime? SelectedDayFrom { get; set; }
         public DateTime? SelectedDayTo { get; set; }
-        public string s1;
+        public string s1 = "";
+        public string s2 = "";
+        public string s3 = "";
+        public string ostatecznyNrPokoju = "";
 
 
         public MainWindow()
@@ -143,7 +146,7 @@ namespace wpflogin
                     $"\r\n Śniadanie do łóżka: {MainWindow.CheckBoxNamesConverter(breakfastToBedCheckBox)}"
                     );
 
-                /*string MSDEconn5 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+                string MSDEconn5 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
                 string ABC = "SELECT idPokoje from pokoje where Liczba_osob >= @liczbaOsob AND Lodowka = @lodwka " +
                     "AND Sejf = @sejf AND Lozko_dzieciece = @lozeczkoDzieciece AND Ekspres_do_kawy = @ekspres " +
                     "AND Sniadanie_do_lozka = @sniadanie  AND Budzenie = @budzenie; ";
@@ -161,13 +164,102 @@ namespace wpflogin
                 SqlDataReader thisreader1 = command5.ExecuteReader();
                 while (thisreader1.Read())
                 {
+                    if (s1 != "")
+                        s1 += ',';
 
                     s1 += (thisreader1["idPokoje"].ToString());
                 }
 
                 thisreader1.Close();
                 connection5.Close();
-                MessageBox.Show(s1);*/
+                string[] tablicaIdPokoje = s1.Split(',');
+                int iloscZnalezionychPokoi = tablicaIdPokoje.Length;
+
+                if (tablicaIdPokoje[0] != "")
+                {
+                    //Sprawdza dostępnosć pokoi w wybranym terminie za pomocą funkcji
+                    int i = 0;
+                    while (i < iloscZnalezionychPokoi)
+                    {
+                        //Pierwsze zapytanie SQL potrzebne do ustalenia czy pokój jest wolny        <-----
+                        string query21 = "SELECT* FROM zamowienia WHERE idPokoje = @room" +
+                                         " AND ReservedSince <= @dateFrom" +
+                                         " AND @dateFrom < ReservedTo";
+
+                        string conn10 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+                        SqlConnection connection10 = new SqlConnection(conn10);
+                        SqlCommand command10 = new SqlCommand(query21, connection10);
+                        connection10.Open();
+
+                        command10.Parameters.AddWithValue("@dateFrom", SelectedDayFrom);
+                        command10.Parameters.AddWithValue("@room", tablicaIdPokoje[i]);
+
+                        SqlDataReader thisreader10 = command10.ExecuteReader();
+                        while (thisreader10.Read())
+                        {
+                            s2 += (thisreader10["idZamowienia"].ToString());
+                        }
+
+                        thisreader10.Close();
+                        connection10.Close();
+
+
+                        //Drugie zapytanie SQL potrzebne do ustalenia czy pokój jest wolny      <-----
+                        string query22 = "SELECT * FROM zamowienia WHERE idPokoje = @room" +
+                                         " AND ReservedSince < @dateTo" +
+                                         " AND ReservedTo > @dateTo";
+
+                        string conn11 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+                        SqlConnection connection11 = new SqlConnection(conn11);
+                        SqlCommand command11 = new SqlCommand(query22, connection11);
+                        connection11.Open();
+
+                        command11.Parameters.AddWithValue("@dateTo", SelectedDayTo);
+                        command11.Parameters.AddWithValue("@room", tablicaIdPokoje[i]);
+
+                        SqlDataReader thisreader3 = command11.ExecuteReader();
+                        while (thisreader3.Read())
+                        {
+
+                            s3 += (thisreader10["idZamowienia"].ToString());
+                        }
+
+                        thisreader10.Close();
+                        connection11.Close();
+
+                        if (s2 != "" || s3 != "")
+                        {
+                            i++;
+                        }
+                        else
+                        {
+                            ostatecznyNrPokoju = tablicaIdPokoje[i];
+                            break;
+                        }
+                    }
+                }
+
+
+
+
+                if (ostatecznyNrPokoju == "")
+                {
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    this.Close();
+                    MessageBox.Show("Brak dostępnych pokoi. Proszę wybrać inne parametry");
+
+
+
+                }
+                else
+                {
+                    MessageBox.Show("Dostępne pokoje: " + s1);
+                }
+
+
+
+
 
 
                 //"Usuwa" wszystkie błędne zamówienia
@@ -179,7 +271,7 @@ namespace wpflogin
                 connection3.Open();
 
                 command3.Parameters.AddWithValue("@Tajemnica", "");
-                command3.Parameters.AddWithValue("@Imie","X");
+                command3.Parameters.AddWithValue("@Imie", "X");
                 command3.Parameters.AddWithValue("@Nazwisko", "X");
                 command3.Parameters.AddWithValue("@TELEFON", "X");
                 command3.Parameters.AddWithValue("@Email", "X");
@@ -220,7 +312,7 @@ namespace wpflogin
 
                 connection.Close();
 
-                goBack();
+
 
             }
 
