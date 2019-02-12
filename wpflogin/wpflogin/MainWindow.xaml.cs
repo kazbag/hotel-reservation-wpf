@@ -243,18 +243,27 @@ namespace wpflogin
 
 
                 if (ostatecznyNrPokoju == "")
-                {
+                {                    
+
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
+                    //this.Close();
+
+                    //  Poniższy MessengeBox zawiera drobne "Oszustwo" ponieważ dostępność została już sprawdzona. Wydaję mi się jednak że jest
+                    //  ono przydatne żeby poinformować użytkownika o tym czy wgl mamy pokój spełniający jego wymagania.
+
+                    MessageBox.Show("Pokoje z wybranymi przez ciebie dodatkami: " + iloscZnalezionychPokoi + 
+                                    $"\r Kliknij OK żeby sprawdzić ich dostępność w wybranym przez ciebie terminie terminie");
+                    MessageBox.Show("Brak dostępnych pokoi.\r Proszę wybrać inne Dodatki lub zmienić datę rezerwacji");
+
                     this.Close();
-                    MessageBox.Show("Brak dostępnych pokoi. Proszę wybrać inne parametry");
-
-
-
                 }
                 else
                 {
-                    MessageBox.Show("Dostępne pokoje: " + s1);
+                    //  Poniższy MessengeBox także zawiera oszustwo. Tym razem jednak spowodowane chęcią utrzymania spujności interfejsu
+
+                    MessageBox.Show("Dostępne pokoje: " + iloscZnalezionychPokoi + "\r Kliknij OK żeby sprawdzić dostępność w terminie");
+                    MessageBox.Show("Pokój Dostępny. \r Numer pokoju: " + ostatecznyNrPokoju);
                 }
 
 
@@ -293,7 +302,7 @@ namespace wpflogin
 
                 // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
 
-                command.Parameters.AddWithValue("@idPokoje", 18);
+                command.Parameters.AddWithValue("@idPokoje", ostatecznyNrPokoju);
                 command.Parameters.AddWithValue("@ReservedSince", SelectedDayFrom);
                 command.Parameters.AddWithValue("@ReservedTo", SelectedDayTo);
                 command.Parameters.AddWithValue("@PeopleAmount", checkboxArray[2]);
@@ -312,7 +321,7 @@ namespace wpflogin
 
                 connection.Close();
 
-
+                goBack();
 
             }
 

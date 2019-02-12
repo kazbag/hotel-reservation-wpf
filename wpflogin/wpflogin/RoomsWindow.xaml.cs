@@ -111,8 +111,7 @@ namespace wpflogin
 
 
 
-
-            MessageBox.Show(s);
+          
     
             MessageBox.Show("Zarezerwowano.");
             goBack();
