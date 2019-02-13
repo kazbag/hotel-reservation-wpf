@@ -111,6 +111,9 @@ namespace wpflogin
 
                 int currentValue = (Convert.ToInt16(currentValueFromAdultsCombobox));
                 int currentValue2 = currentValue + 1;
+
+                int childrenValue = (Convert.ToInt16(currentValueFromChildrenCombobox));
+
                 // tylko wyświetla liczbę osób, sprawdzenie czy jest ok. można wyrzucić.
 
                 //przypisywanie wartosci checkboxow do zmiennych
@@ -138,7 +141,7 @@ namespace wpflogin
 
                 TimeSpan czasRezerwacji = SelectedDayTo - SelectedDayFrom;
                 int dniRezerwacji = czasRezerwacji.Days;
-              
+
                 cenaPokoju = cenaPokoju * currentValue2;
 
                 if (wakeUpCheckbox)
@@ -148,11 +151,11 @@ namespace wpflogin
                 if (safeCheckBox)
                     cenaPokoju += 20;
                 if (childBedCheckBox)
-                    cenaPokoju += 20;
+                    cenaPokoju += 20 * childrenValue;
                 if (coffeeMachineCheckBox)
                     cenaPokoju += 30;
                 if (breakfastToBedCheckBox)
-                    cenaPokoju += currentValue2*50;
+                    cenaPokoju += currentValue2 * 50;
 
                 cenaPokoju = cenaPokoju * dniRezerwacji;
 
@@ -166,12 +169,12 @@ namespace wpflogin
                     $"\r\n Sejf: {MainWindow.CheckBoxNamesConverter(safeCheckBox)}" +
                     $"\r\n Łóżeczko dla dziecka: {MainWindow.CheckBoxNamesConverter(childBedCheckBox)}" +
                     $"\r\n Ekspres do kawy: {MainWindow.CheckBoxNamesConverter(coffeeMachineCheckBox)}" +
-                    $"\r\n Śniadanie do łóżka: {MainWindow.CheckBoxNamesConverter(breakfastToBedCheckBox)}"+
+                    $"\r\n Śniadanie do łóżka: {MainWindow.CheckBoxNamesConverter(breakfastToBedCheckBox)}" +
                     $"\r\n Cena zamówienia: {cenaPokoju}zł"
                     );
 
 
-        string MSDEconn5 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+                string MSDEconn5 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
                 string ABC = "SELECT idPokoje from pokoje where Liczba_osob >= @liczbaOsob AND Lodowka = @lodwka " +
                     "AND Sejf = @sejf AND Lozko_dzieciece = @lozeczkoDzieciece AND Ekspres_do_kawy = @ekspres " +
                     "AND Sniadanie_do_lozka = @sniadanie  AND Budzenie = @budzenie; ";
@@ -268,15 +271,15 @@ namespace wpflogin
 
 
                 if (ostatecznyNrPokoju == "")
-                {                    
+                {
 
-                    
+
                     //this.Close();
 
                     //  Poniższy MessengeBox zawiera drobne "Oszustwo" ponieważ dostępność została już sprawdzona. Wydaję mi się jednak że jest
                     //  ono przydatne żeby poinformować użytkownika o tym czy wgl mamy pokój spełniający jego wymagania.
 
-                    MessageBox.Show("Ilość pokoi z wybranymi przez ciebie dodatkami: " + iloscZnalezionychPokoi + 
+                    MessageBox.Show("Ilość pokoi z wybranymi przez ciebie dodatkami: " + iloscZnalezionychPokoi +
                                     $"\rKliknij OK żeby sprawdzić ich dostępność w wybranym przez ciebie terminie terminie");
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
@@ -313,7 +316,7 @@ namespace wpflogin
                 connection3.Close();
 
 
-                if(ostatecznyNrPokoju != "")
+                if (ostatecznyNrPokoju != "")
                 {
                     string conn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
 
@@ -351,7 +354,7 @@ namespace wpflogin
                     goBack();
                 }
 
-                
+
 
             }
 

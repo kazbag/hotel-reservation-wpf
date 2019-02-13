@@ -32,8 +32,6 @@
                 <Calendar SelectionMode="SingleDate" SelectedDate="{Binding SelectedDayFrom}" Name="fromCalendar" Grid.Column="0" Margin="10 0 0 10" Background="#c9c9c9"></Calendar>
                 <Calendar SelectionMode="SingleDate" SelectedDate="{Binding SelectedDayTo}" Name="toCalendar" Grid.Column="1" Margin="10 0 0 10"  Background="#c9c9c9"></Calendar>
             </Grid>
-                <Button Click="BookFrom" Content="Zarezerwuj od (test)"></Button>
-                <Button Click="BookTo" Content="Zarezerwuj do (test)"></Button>
 
             <!--koniec kalendarzy-->
 
@@ -49,7 +47,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="0" Content="Dorośli" Margin="10"></Label>
-                <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="1" Content="Dzieci" Margin="10"></Label>
+                <Label Background="#182D3B" Foreground="AliceBlue" Grid.Column="1" Content="Dzieci do lat 3 (za darmo)" Margin="10"></Label>
             </Grid>
 
 
@@ -78,7 +76,7 @@
             <!--koniec ludzi-->
 
             <!--udogodnienia-->
-            
+
             <Label Margin="10 10" Content="Udogodnienia" Background="#182D3B" Foreground="AliceBlue"></Label>
 
             <Grid Name="extras" Margin="10 0">
@@ -89,24 +87,27 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Background="#182D3B">
-                    <CheckBox Name="wakeUp" Margin="1" Content="Pobudka" Foreground="AliceBlue"></CheckBox>
-                    <CheckBox Name="fridge" Margin="1" Content="Lodówka" Foreground="AliceBlue"></CheckBox>
-                    <CheckBox Name="safe" Margin="1" Content="Sejf" Foreground="AliceBlue"></CheckBox>
+                    <CheckBox Name="wakeUp" Margin="1" Content="Pobudka 20zł" Foreground="AliceBlue"></CheckBox>
+                    <CheckBox Name="fridge" Margin="1" Content="Lodówka 20zł" Foreground="AliceBlue"></CheckBox>
+                    <CheckBox Name="safe" Margin="1" Content="Sejf 20zł" Foreground="AliceBlue"></CheckBox>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" Background="#182D3B">
-                    <CheckBox Name="childBed" Margin="1" Content="Łóżeczko dla dziecka" Foreground="AliceBlue"></CheckBox>
-                    <CheckBox Name="coffeeMachine" Margin="1" Content="Ekspres do kawy" Foreground="AliceBlue"></CheckBox>
-                    <CheckBox Name="breakfastToBed" Margin="1" Content="Śniadanie do łóżka" Foreground="AliceBlue"></CheckBox>
+                    <CheckBox Name="childBed" Margin="1" Content="Łóżeczko dla dziecka 20zł" Foreground="AliceBlue"></CheckBox>
+                    <CheckBox Name="coffeeMachine" Margin="1" Content="Ekspres do kawy 30zł" Foreground="AliceBlue"></CheckBox>
+                    <CheckBox Name="breakfastToBed" Margin="1" Content="Śniadanie do łóżka 50zł na osobę" Foreground="AliceBlue"></CheckBox>
                 </StackPanel>
 
             </Grid>
 
-                <!--sprawdzanie dostępności-->
+            <Label Margin="10 10" Content="* Jeżeli bierzesz pokój z dzieckiem, opcjonalnie weź łóżeczko."></Label>
 
-                <Button Click="BtnCheck_OnClick" Name="btnCheck" Padding="3" Margin="100 10" Grid.Column="1" Content="Sprawdź dostępność"></Button>
 
-                <!--koniec sprawdzania dostępności-->
+            <!--sprawdzanie dostępności-->
+
+            <Button Click="BtnCheck_OnClick" Name="btnCheck" Padding="3" Margin="100 10" Grid.Column="1" Content="Sprawdź dostępność"></Button>
+
+            <!--koniec sprawdzania dostępności-->
 
         </StackPanel>
 
