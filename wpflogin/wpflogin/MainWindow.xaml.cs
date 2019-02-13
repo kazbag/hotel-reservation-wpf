@@ -217,14 +217,14 @@ namespace wpflogin
                         command11.Parameters.AddWithValue("@dateTo", SelectedDayTo);
                         command11.Parameters.AddWithValue("@room", tablicaIdPokoje[i]);
 
-                        SqlDataReader thisreader3 = command11.ExecuteReader();
-                        while (thisreader3.Read())
+                        SqlDataReader thisreader11 = command11.ExecuteReader();
+                        while (thisreader11.Read())
                         {
 
-                            s3 += (thisreader10["idZamowienia"].ToString());
+                            s3 += (thisreader11["idZamowienia"].ToString());
                         }
 
-                        thisreader10.Close();
+                        thisreader11.Close();
                         connection11.Close();
 
                         if (s2 != "" || s3 != "")
@@ -245,25 +245,26 @@ namespace wpflogin
                 if (ostatecznyNrPokoju == "")
                 {                    
 
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
+                    
                     //this.Close();
 
                     //  Poniższy MessengeBox zawiera drobne "Oszustwo" ponieważ dostępność została już sprawdzona. Wydaję mi się jednak że jest
                     //  ono przydatne żeby poinformować użytkownika o tym czy wgl mamy pokój spełniający jego wymagania.
 
-                    MessageBox.Show("Pokoje z wybranymi przez ciebie dodatkami: " + iloscZnalezionychPokoi + 
-                                    $"\r Kliknij OK żeby sprawdzić ich dostępność w wybranym przez ciebie terminie terminie");
-                    MessageBox.Show("Brak dostępnych pokoi.\r Proszę wybrać inne Dodatki lub zmienić datę rezerwacji");
-
+                    MessageBox.Show("Ilość pokoi z wybranymi przez ciebie dodatkami: " + iloscZnalezionychPokoi + 
+                                    $"\rKliknij OK żeby sprawdzić ich dostępność w wybranym przez ciebie terminie terminie");
                     this.Close();
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+
+                    MessageBox.Show("Brak dostępnych pokoi.\r Proszę wybrać inne Dodatki lub zmienić datę rezerwacji");
                 }
                 else
                 {
                     //  Poniższy MessengeBox także zawiera oszustwo. Tym razem jednak spowodowane chęcią utrzymania spujności interfejsu
 
                     MessageBox.Show("Dostępne pokoje: " + iloscZnalezionychPokoi + "\r Kliknij OK żeby sprawdzić dostępność w terminie");
-                    MessageBox.Show("Pokój Dostępny. \r Numer pokoju: " + ostatecznyNrPokoju);
+                    MessageBox.Show("Pokój Dostępny. \rNumer pokoju: " + ostatecznyNrPokoju);
                 }
 
 
@@ -291,37 +292,42 @@ namespace wpflogin
                 connection3.Close();
 
 
-                string conn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+                if(ostatecznyNrPokoju != "")
+                {
+                    string conn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
 
-                string query = "INSERT INTO zamowienia VALUES ( @idPokoje,@Imie,@Nazwisko,@TELEFON,@Email, @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
-                    "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed)";
-                SqlConnection connection = new SqlConnection(conn);
-                SqlCommand command = new SqlCommand(query, connection);
+                    string query = "INSERT INTO zamowienia VALUES ( @idPokoje,@Imie,@Nazwisko,@TELEFON,@Email, @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
+                        "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed)";
+                    SqlConnection connection = new SqlConnection(conn);
+                    SqlCommand command = new SqlCommand(query, connection);
 
-                connection.Open();
+                    connection.Open();
 
-                // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
+                    // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
 
-                command.Parameters.AddWithValue("@idPokoje", ostatecznyNrPokoju);
-                command.Parameters.AddWithValue("@ReservedSince", SelectedDayFrom);
-                command.Parameters.AddWithValue("@ReservedTo", SelectedDayTo);
-                command.Parameters.AddWithValue("@PeopleAmount", checkboxArray[2]);
-                command.Parameters.AddWithValue("@WakeUp", checkboxArray[3]);
-                command.Parameters.AddWithValue("@Fridge", checkboxArray[4]);
-                command.Parameters.AddWithValue("@Safe", checkboxArray[5]);
-                command.Parameters.AddWithValue("@ChildBed", checkboxArray[6]);
-                command.Parameters.AddWithValue("@CoffeeMachine", checkboxArray[7]);
-                command.Parameters.AddWithValue("@BreakfastToBed", checkboxArray[8]);
-                command.Parameters.AddWithValue("@Imie", "");
-                command.Parameters.AddWithValue("@Nazwisko", "");
-                command.Parameters.AddWithValue("@TELEFON", "");
-                command.Parameters.AddWithValue("@Email", "");
+                    command.Parameters.AddWithValue("@idPokoje", ostatecznyNrPokoju);
+                    command.Parameters.AddWithValue("@ReservedSince", SelectedDayFrom);
+                    command.Parameters.AddWithValue("@ReservedTo", SelectedDayTo);
+                    command.Parameters.AddWithValue("@PeopleAmount", checkboxArray[2]);
+                    command.Parameters.AddWithValue("@WakeUp", checkboxArray[3]);
+                    command.Parameters.AddWithValue("@Fridge", checkboxArray[4]);
+                    command.Parameters.AddWithValue("@Safe", checkboxArray[5]);
+                    command.Parameters.AddWithValue("@ChildBed", checkboxArray[6]);
+                    command.Parameters.AddWithValue("@CoffeeMachine", checkboxArray[7]);
+                    command.Parameters.AddWithValue("@BreakfastToBed", checkboxArray[8]);
+                    command.Parameters.AddWithValue("@Imie", "");
+                    command.Parameters.AddWithValue("@Nazwisko", "");
+                    command.Parameters.AddWithValue("@TELEFON", "");
+                    command.Parameters.AddWithValue("@Email", "");
 
-                command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
 
-                connection.Close();
+                    connection.Close();
 
-                goBack();
+                    goBack();
+                }
+
+                
 
             }
 
