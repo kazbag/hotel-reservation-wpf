@@ -32,7 +32,14 @@ namespace wpflogin
         public string s1 = "";
         public string s2 = "";
         public string s3 = "";
-        public string ostatecznyNrPokoju = "";
+        public static string ostatecznyNrPokoju = "";
+
+        public static string ClientOstatecznyNrPokoju
+        {
+            get => ostatecznyNrPokoju;
+            set => ostatecznyNrPokoju = value;
+        }
+
         public int cenaPokoju = 100;
 
         public MainWindow()
@@ -285,6 +292,7 @@ namespace wpflogin
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
                     this.Close();
+
 
                     MessageBox.Show("Brak dostępnych pokoi.\r Proszę wybrać inne Dodatki lub zmienić datę rezerwacji");
                 }

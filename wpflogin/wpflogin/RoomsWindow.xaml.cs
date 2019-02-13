@@ -51,7 +51,7 @@ namespace wpflogin
             get => clientEmailString;
             
         }
-
+        
 
         private void goBack()
         {
@@ -62,6 +62,7 @@ namespace wpflogin
         public RoomsWindow()
         {
             InitializeComponent();
+            RoomID.Text = Convert.ToString("Pokój nr " + MainWindow.ostatecznyNrPokoju);
         }
 
         private void BookBtn_OnClick(object sender, RoutedEventArgs e)

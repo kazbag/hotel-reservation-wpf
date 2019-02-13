@@ -76,7 +76,7 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Name="RoomID" Padding="10" Grid.Column="0" Text="Pokój 64" Foreground="AliceBlue"></TextBlock>
+                <TextBlock Name="RoomID" Padding="10" Grid.Column="0" DataContext="" Text="{Binding ClientOstatecznyNrPokoju}" Foreground="AliceBlue"></TextBlock>
                 <TextBlock Name="RoomCost" Padding="10" Grid.Column="1" Text="250zł" Foreground="AliceBlue"></TextBlock>
                 <TextBlock Name="RoomFloor" Padding="10" Grid.Column="2" Text="Piętro 3" Foreground="AliceBlue"></TextBlock>
 
