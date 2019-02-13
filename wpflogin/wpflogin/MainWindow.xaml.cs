@@ -26,13 +26,14 @@ namespace wpflogin
     /// </summary>
     public partial class MainWindow : Window
     {
-        public DateTime? SelectedDayFrom { get; set; }
-        public DateTime? SelectedDayTo { get; set; }
+        public DateTime SelectedDayFrom { get; set; }
+        public DateTime SelectedDayTo { get; set; }
+        //public TimeSpan czasRezerwacji;
         public string s1 = "";
         public string s2 = "";
         public string s3 = "";
         public string ostatecznyNrPokoju = "";
-
+        public int cenaPokoju = 100;
 
         public MainWindow()
         {
@@ -133,6 +134,28 @@ namespace wpflogin
                     wakeUpCheckbox.ToString(), fridgeCheckbox.ToString(),safeCheckBox.ToString(),
                     childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBedCheckBox.ToString() };
 
+                //Wskazuje cenę zamówienia
+
+                TimeSpan czasRezerwacji = SelectedDayTo - SelectedDayFrom;
+                int dniRezerwacji = czasRezerwacji.Days;
+              
+                cenaPokoju = cenaPokoju * currentValue;
+
+                if (wakeUpCheckbox)
+                    cenaPokoju += 20;
+                if (fridgeCheckbox)
+                    cenaPokoju += 20;
+                if (safeCheckBox)
+                    cenaPokoju += 20;
+                if (childBedCheckBox)
+                    cenaPokoju += 20;
+                if (coffeeMachineCheckBox)
+                    cenaPokoju += 30;
+                if (breakfastToBedCheckBox)
+                    cenaPokoju += currentValue*50;
+
+                cenaPokoju = cenaPokoju * dniRezerwacji;
+
                 // wyswietlenie komunikatu potwierdzanjacego wybrane opcje
                 MessageBox.Show(
                     $" Ilość osób: {currentValue}" +
@@ -143,10 +166,12 @@ namespace wpflogin
                     $"\r\n Sejf: {MainWindow.CheckBoxNamesConverter(safeCheckBox)}" +
                     $"\r\n Łóżeczko dla dziecka: {MainWindow.CheckBoxNamesConverter(childBedCheckBox)}" +
                     $"\r\n Ekspres do kawy: {MainWindow.CheckBoxNamesConverter(coffeeMachineCheckBox)}" +
-                    $"\r\n Śniadanie do łóżka: {MainWindow.CheckBoxNamesConverter(breakfastToBedCheckBox)}"
+                    $"\r\n Śniadanie do łóżka: {MainWindow.CheckBoxNamesConverter(breakfastToBedCheckBox)}"+
+                    $"\r\n Cena zamówienia: {cenaPokoju}zł"
                     );
 
-                string MSDEconn5 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
+
+        string MSDEconn5 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
                 string ABC = "SELECT idPokoje from pokoje where Liczba_osob >= @liczbaOsob AND Lodowka = @lodwka " +
                     "AND Sejf = @sejf AND Lozko_dzieciece = @lozeczkoDzieciece AND Ekspres_do_kawy = @ekspres " +
                     "AND Sniadanie_do_lozka = @sniadanie  AND Budzenie = @budzenie; ";
@@ -268,10 +293,6 @@ namespace wpflogin
                 }
 
 
-
-
-
-
                 //"Usuwa" wszystkie błędne zamówienia
                 string MSDEconn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
                 string query3 = "UPDATE zamowienia SET Imie = @Imie, Nazwisko = @Nazwisko, TELEFON = @TELEFON,Email=@Email WHERE Imie = @Tajemnica";
@@ -297,7 +318,7 @@ namespace wpflogin
                     string conn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
 
                     string query = "INSERT INTO zamowienia VALUES ( @idPokoje,@Imie,@Nazwisko,@TELEFON,@Email, @ReservedSince, @ReservedTo, @PeopleAmount, @WakeUp, @Fridge," +
-                        "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed)";
+                        "@Safe, @ChildBed, @CoffeeMachine, @BreakfastToBed, @Cena)";
                     SqlConnection connection = new SqlConnection(conn);
                     SqlCommand command = new SqlCommand(query, connection);
 
@@ -315,10 +336,13 @@ namespace wpflogin
                     command.Parameters.AddWithValue("@ChildBed", checkboxArray[6]);
                     command.Parameters.AddWithValue("@CoffeeMachine", checkboxArray[7]);
                     command.Parameters.AddWithValue("@BreakfastToBed", checkboxArray[8]);
+                    command.Parameters.AddWithValue("@Cena", cenaPokoju);
                     command.Parameters.AddWithValue("@Imie", "");
                     command.Parameters.AddWithValue("@Nazwisko", "");
                     command.Parameters.AddWithValue("@TELEFON", "");
                     command.Parameters.AddWithValue("@Email", "");
+
+
 
                     command.ExecuteNonQuery();
 
