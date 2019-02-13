@@ -40,7 +40,13 @@ namespace wpflogin
             set => ostatecznyNrPokoju = value;
         }
 
-        public int cenaPokoju = 100;
+        public static int cenaPokoju = 100;
+
+        public static int ClientCenaPokoju
+        {
+            get => cenaPokoju;
+            set => cenaPokoju = value;
+        }
 
         public MainWindow()
         {
@@ -49,14 +55,12 @@ namespace wpflogin
             this.DataContext = this;
         }
 
-        //
         private void goBack()
         {
             RoomsWindow rooms = new RoomsWindow();
             rooms.Show();
             this.Close();
         }
-        //
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
@@ -83,11 +87,7 @@ namespace wpflogin
 
             //sprawdza logiczność wyborów
 
-            //if (Convert.ToByte(adultsCombobox.SelectedIndex.ToString()) == 0
-            //    && Convert.ToByte(childrenCombobox.SelectedIndex.ToString()) == 0)
-            //{
-            //    MessageBox.Show("Błąd: Nie możesz zarezerwować pokoju 0 osobowego.");
-            //}
+
             if (selectedDayFromString == "")
             {
                 MessageBox.Show("Błąd: Nie wybrano daty początku rezerwacji");
@@ -120,8 +120,6 @@ namespace wpflogin
                 int currentValue2 = currentValue + 1;
 
                 int childrenValue = (Convert.ToInt16(currentValueFromChildrenCombobox));
-
-                // tylko wyświetla liczbę osób, sprawdzenie czy jest ok. można wyrzucić.
 
                 //przypisywanie wartosci checkboxow do zmiennych
 
@@ -181,14 +179,15 @@ namespace wpflogin
                     $"\r\n Cena zamówienia: {cenaPokoju} zł"
                 );
 
-
                 string MSDEconn5 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
                 string ABC = "SELECT idPokoje from pokoje where Liczba_osob >= @liczbaOsob AND Lodowka = @lodwka " +
                     "AND Sejf = @sejf AND Lozko_dzieciece = @lozeczkoDzieciece AND Ekspres_do_kawy = @ekspres " +
                     "AND Sniadanie_do_lozka = @sniadanie  AND Budzenie = @budzenie; ";
                 SqlConnection connection5 = new SqlConnection(MSDEconn5);
                 SqlCommand command5 = new SqlCommand(ABC, connection5);
+
                 connection5.Open();
+
                 command5.Parameters.AddWithValue("@budzenie", checkboxArray[3]);
                 command5.Parameters.AddWithValue("@liczbaOsob", checkboxArray[2]);
                 command5.Parameters.AddWithValue("@lodwka", checkboxArray[4]);
@@ -198,6 +197,7 @@ namespace wpflogin
                 command5.Parameters.AddWithValue("@sniadanie", checkboxArray[8]);
 
                 SqlDataReader thisreader1 = command5.ExecuteReader();
+
                 while (thisreader1.Read())
                 {
                     if (s1 != "")
@@ -239,7 +239,6 @@ namespace wpflogin
                         thisreader10.Close();
                         connection10.Close();
 
-
                         //Drugie zapytanie SQL potrzebne do ustalenia czy pokój jest wolny      <-----
                         string query22 = "SELECT * FROM zamowienia WHERE idPokoje = @room" +
                                          " AND ReservedSince < @dateTo" +
@@ -275,15 +274,8 @@ namespace wpflogin
                     }
                 }
 
-
-
-
                 if (ostatecznyNrPokoju == "")
                 {
-
-
-                    //this.Close();
-
                     //  Poniższy MessengeBox zawiera drobne "Oszustwo" ponieważ dostępność została już sprawdzona. Wydaję mi się jednak że jest
                     //  ono przydatne żeby poinformować użytkownika o tym czy wgl mamy pokój spełniający jego wymagania.
 
@@ -292,8 +284,6 @@ namespace wpflogin
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
                     this.Close();
-
-
                     MessageBox.Show("Brak dostępnych pokoi.\r Proszę wybrać inne Dodatki lub zmienić datę rezerwacji");
                 }
                 else
@@ -304,8 +294,8 @@ namespace wpflogin
                     MessageBox.Show("Pokój Dostępny. \rNumer pokoju: " + ostatecznyNrPokoju);
                 }
 
-
                 //"Usuwa" wszystkie błędne zamówienia
+
                 string MSDEconn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
                 string query3 = "UPDATE zamowienia SET Imie = @Imie, Nazwisko = @Nazwisko, TELEFON = @TELEFON,Email=@Email WHERE Imie = @Tajemnica";
                 SqlConnection connection3 = new SqlConnection(MSDEconn);
@@ -319,10 +309,8 @@ namespace wpflogin
                 command3.Parameters.AddWithValue("@TELEFON", "X");
                 command3.Parameters.AddWithValue("@Email", "X");
 
-
                 command3.ExecuteNonQuery();
-
-                connection3.Close();
+                    connection3.Close();
 
 
                 if (ostatecznyNrPokoju != "")
@@ -335,8 +323,6 @@ namespace wpflogin
                     SqlCommand command = new SqlCommand(query, connection);
 
                     connection.Open();
-
-                    // trzeba ustawić autoinkrementację ID, jest ustawiony na sztywno i jeden jedyny raz się uda wstawić rekord, w innym przypadku wyrzuci błąd o duplikacie
 
                     command.Parameters.AddWithValue("@idPokoje", ostatecznyNrPokoju);
                     command.Parameters.AddWithValue("@ReservedSince", SelectedDayFrom);
@@ -354,20 +340,13 @@ namespace wpflogin
                     command.Parameters.AddWithValue("@TELEFON", "");
                     command.Parameters.AddWithValue("@Email", "");
 
-
-
                     command.ExecuteNonQuery();
 
                     connection.Close();
 
                     goBack();
                 }
-
-
-
             }
-
-
         }
 
         // Zamienia wartości boolowskie na stringi dla funkcji BtnCheck_OnClick
@@ -383,14 +362,8 @@ namespace wpflogin
             {
                 return "Nie";
             }
-
         }
 
-
-
-
-        // todo
-        // trzeba zrzucić do bazy -od i -do
         // BookFrom i BookTo wyświetlają messageboxa, którego finalnie nie będzie. Można powiedzieć, że są to funkcje "testujące"
 
         private void BookFrom(object sender, RoutedEventArgs e)
@@ -420,27 +393,6 @@ namespace wpflogin
             MessageBox.Show(msg);
 
         }
-
-
-        // todo
-        // checkboxy
-        // sądzę że to może się przydać https://www.youtube.com/watch?v=VHSIAz-WVDA
-        // trzeba zrobić pobieranie wartości z każdego checkboxa do zmiennej, a następnie do tablicy checkboxArray
-        // i wysłać zapytanie do bazy o zwrócenie pokoju, lub podobnie
-
-        // otworzenie połączenia z bazą, jeżeli nie wyrzuci żadnego błędu i wszystkie pola są wypełnione.
-
-        // zapytanie - wszystkie zmienne (dataFrom, dataTo, peopleAmount (czyli suma adultsAmount + childrenAmount),
-
-        // i każde poszczególne "extrasy". Można to będzie zrobić albo stringiem,
-        // np string extrasValues = "000000" i później każdy poszczególny zaznaczony checkbox
-        // by modyfikował(nadpisywał) poszczególny index "1" jeżeli true,
-        // lub zostawiał "0" jeśli false, czyli np string by wyglądał później "010111" i  następnie splitował każdy index przecinkiem,
-        // żeby powstało "0", "1", "0", "1", "1", "1"
-        // jak wydaje się za bardzo pokręcone, można to pewnie rozkminić w inny sposób, ale taki wpadł mi do głowy
     }
-
-
-
 }
 

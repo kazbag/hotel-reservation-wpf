@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpflogin"
         mc:Ignorable="d"
-        Title="RoomsWindow" MinHeight="450" MinWidth="450">
+        Title="RoomsWindow" MinHeight="650" MinWidth="650">
     <Border Margin="10" Background="#182D3B">
 
         <StackPanel>
@@ -44,41 +44,33 @@
             <!--imię i nazwisko-->
 
                 <StackPanel Margin="10 0" Grid.Column="0">
-                    <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Imię"></Label>
+                    <TextBlock Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Text="Imię" TextAlignment="Center"></TextBlock>
                     <TextBox Name="clientNameTxt" FontSize="18" Padding="10" Margin="0 10" TextChanged="ClientNameTxt_TextChanged"></TextBox>
-                    <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Nazwisko"></Label>
+                    <TextBlock Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Text="Nazwisko" TextAlignment="Center"></TextBlock>
                     <TextBox Name="clientSecondNameTxt" FontSize="18" Padding="10" Margin="0 10" TextChanged="ClientSecondNameTxt_TextChanged"></TextBox>
                 </StackPanel>
 
             <!--telefon i email-->
 
                 <StackPanel Margin="10 0" Grid.Column="1">
-                    <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Telefon"></Label>
+                    <TextBlock Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Text="Telefon" TextAlignment="Center"></TextBlock>
                     <TextBox Name="clientPhoneTxt" FontSize="18" Padding="10" Margin="0 10" TextChanged="ClientPhoneTxt_TextChanged"></TextBox>
-                    <Label Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Content="Email"></Label>
+                    <TextBlock Background="MidnightBlue" Foreground="AliceBlue" FontSize="18" Text="Email" TextAlignment="Center"></TextBlock>
                     <TextBox Name="clientEmailTxt" FontSize="18" Padding="10" Margin="0 10" TextChanged="ClientEmailTxt_TextChanged"></TextBox>
                 </StackPanel>
             </Grid>
 
-            <!--lista dostępnych pokojów-->
-  
-            <!--tutaj będzie zwrócone zapytanie z bazy. jeśli odnaleziono dany rekord,
-            to zwraca w poszczególne textblock'i wartości z pierwszego odnalezionego pokoju w bazie. 
-            Zwraca tylko numer pokoju (RoomID), cenę za pokój (RoomCost), jak i piętro, na którym
-            znajduje się pokój (RoomFloor). Jeśli nie znaleziono pokoju spełniającego wymagania,
-            to wyświetli odpowiedni komunikat. -->
-
-            <Grid Margin="20" Background="CornflowerBlue">
+            <Grid Margin="10 50" Background="CornflowerBlue">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Name="RoomID" Padding="10" Grid.Column="0" DataContext="" Text="{Binding ClientOstatecznyNrPokoju}" Foreground="AliceBlue"></TextBlock>
-                <TextBlock Name="RoomCost" Padding="10" Grid.Column="1" Text="250zł" Foreground="AliceBlue"></TextBlock>
-                <TextBlock Name="RoomFloor" Padding="10" Grid.Column="2" Text="Piętro 3" Foreground="AliceBlue"></TextBlock>
+                <TextBlock Name="RoomID" Padding="10" Grid.Column="0" Text="{Binding ClientOstatecznyNrPokoju}" Foreground="AliceBlue"></TextBlock>
+                <TextBlock Name="RoomCost" Padding="10" Grid.Column="1" Text="{Binding ClientCenaPokoju}" Foreground="AliceBlue"></TextBlock>
+                <TextBlock Name="RoomFloor" Padding="10" Grid.Column="2" TextAlignment="Center" FontWeight="Bold" Text="Sprawdź, czy cena i numer pokoju się zgadza." Background="RoyalBlue" Foreground="AliceBlue"></TextBlock>
 
                 <Button Click="BookBtn_OnClick" Grid.Column="3" Name="bookBtn" Content="Rezerwuj"></Button>
 

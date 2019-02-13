@@ -33,7 +33,6 @@ namespace wpflogin
         public string ClientNameString
         {
             get => clientNameString;
-            
         }
      
         public string ClientSecondNameString
@@ -51,8 +50,6 @@ namespace wpflogin
             get => clientEmailString;
             
         }
-        
-
         private void goBack()
         {
             MainWindow main = new MainWindow();
@@ -63,6 +60,7 @@ namespace wpflogin
         {
             InitializeComponent();
             RoomID.Text = Convert.ToString("Pokój nr " + MainWindow.ostatecznyNrPokoju);
+            RoomCost.Text = Convert.ToString(MainWindow.ClientCenaPokoju + " zł");
         }
 
         private void BookBtn_OnClick(object sender, RoutedEventArgs e)
@@ -83,37 +81,9 @@ namespace wpflogin
             command.Parameters.AddWithValue("@TELEFON", dataArray[2]);
             command.Parameters.AddWithValue("@Email", dataArray[3]);
 
-
             command.ExecuteNonQuery();
-           
-            connection.Close();
-            /*
-            string MSDEconn1 = (@"Data source=FILIP-PC\SQLEXPRESS; Initial Catalog=filip_database; Integrated Security=True;");
-            string query1 = "SELECT * FROM pokoje ";
-            SqlConnection connection1 = new SqlConnection(MSDEconn1);
-            connection1.Open();
-            SqlCommand command1 = new SqlCommand(query1, connection1);
-            
-            SqlDataReader thisReader = command1.ExecuteReader();
-            
-            while (thisReader.Read())
-            {
-
-                s+=(thisReader["Number_pokoju"].ToString() + " " + thisReader["Pietro"].ToString()
-                 + " " + thisReader["Liczba_osob"] + " " + thisReader["Budzenie"] + " " + thisReader["Lodowka"]
-                 + " " + thisReader["Sejf"] + " " + thisReader["Lozko_dzieciece"] + " " + thisReader["Ekspres_do_kawy"]
-                 + " " + thisReader["Sniadanie_do_lozka"]);
-            }
-             
-            thisReader.Close();
-            connection1.Close();
-
-    */
-
-
-
+                connection.Close();
           
-    
             MessageBox.Show("Zarezerwowano.");
             goBack();
         }
@@ -126,20 +96,20 @@ namespace wpflogin
         
         private void ClientNameTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
-
             clientNameString = clientNameTxt.Text;
             if (clientNameString.Length > 50) throw new IndexOutOfRangeException("Imie nie moze przekraczac 50 znakow");   
         }
 
         private void ClientPhoneTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
-             clientPhoneString = clientPhoneTxt.Text;
+            clientPhoneString = clientPhoneTxt.Text;
+
             double j;
+
             if (Double.TryParse(clientPhoneString, out j))
                 clientPhoneString = j.ToString();
             else
                 MessageBox.Show("Niepoprawny format wprowadzonych danych");
-            
         }
 
         private void ClientSecondNameTxt_TextChanged(object sender, TextChangedEventArgs e)
