@@ -150,18 +150,29 @@ namespace wpflogin
                 cenaPokoju = cenaPokoju * currentValue2;
 
                 if (wakeUpCheckbox)
+                {
                     cenaPokoju += 20;
+                }
                 if (fridgeCheckbox)
+                {
                     cenaPokoju += 20;
+                }
                 if (safeCheckBox)
+                {
                     cenaPokoju += 20;
-                if (childBedCheckBox)
+                }
+                if (childBedCheckBox && childrenValue != 0)
+                {
                     cenaPokoju += 20 * childrenValue;
+                }
                 if (coffeeMachineCheckBox)
+                {
                     cenaPokoju += 30;
+                }
                 if (breakfastToBedCheckBox)
-                    cenaPokoju += currentValue2 * 50;
-
+                {
+                    cenaPokoju = (currentValue2 * 50) + cenaPokoju;
+                }
                 cenaPokoju = cenaPokoju * dniRezerwacji;
 
                 // wyswietlenie komunikatu potwierdzanjacego wybrane opcje
@@ -169,7 +180,8 @@ namespace wpflogin
                     $" Ilość osób: {currentValue2}" +
                     $"\r\n Ilość dzieci do lat 3: {childrenValue}" +
                     $"\r\n Początek rezerwacji: { DateTime.Parse(selectedDayFromString).ToString("dd.MM.yyyy")}" +
-                    $"\r\n Koniec rezerwacji: {DateTime.Parse(selectedDayToString).ToString("dd.MM.yyyy")}" + 
+                    $"\r\n Koniec rezerwacji: {DateTime.Parse(selectedDayToString).ToString("dd.MM.yyyy")}" +
+                    $"\r\n ilosc dni: {dniRezerwacji}" +
                     $"\r\n Pobudka: {MainWindow.CheckBoxNamesConverter(wakeUpCheckbox)}" +
                     $"\r\n Lodówka: {MainWindow.CheckBoxNamesConverter(fridgeCheckbox)}" +
                     $"\r\n Sejf: {MainWindow.CheckBoxNamesConverter(safeCheckBox)}" +
@@ -285,6 +297,7 @@ namespace wpflogin
                     mainWindow.Show();
                     this.Close();
                     MessageBox.Show("Brak dostępnych pokoi.\r Proszę wybrać inne Dodatki lub zmienić datę rezerwacji");
+                    cenaPokoju = 100;
                 }
                 else
                 {
@@ -310,7 +323,7 @@ namespace wpflogin
                 command3.Parameters.AddWithValue("@Email", "X");
 
                 command3.ExecuteNonQuery();
-                    connection3.Close();
+                connection3.Close();
 
 
                 if (ostatecznyNrPokoju != "")
