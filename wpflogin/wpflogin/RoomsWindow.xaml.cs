@@ -22,11 +22,11 @@ namespace wpflogin
     /// </summary>
     public partial class RoomsWindow : Window
     {
-        string[,] tablica = new string[9,100];
-         string clientNameString;
-         string clientSecondNameString;
-         string clientPhoneString;
-         string clientEmailString;
+        string[,] tablica = new string[9, 100];
+        string clientNameString;
+        string clientSecondNameString;
+        string clientPhoneString;
+        string clientEmailString;
         public string s;
         public string a = "";
 
@@ -34,21 +34,21 @@ namespace wpflogin
         {
             get => clientNameString;
         }
-     
+
         public string ClientSecondNameString
         {
             get => clientSecondNameString;
-            
+
         }
         public string ClientPhnoneString
         {
             get => clientPhoneString;
-            
+
         }
         public string ClientEmailString
         {
             get => clientEmailString;
-            
+
         }
         private void goBack()
         {
@@ -68,36 +68,48 @@ namespace wpflogin
             string[] dataArray = new string[4] { clientNameString, clientSecondNameString, clientPhoneString, clientEmailString };
             string MSDEconn = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
 
-            //Dodaje Danę do Ostatniego zamówienia
-            string query = "UPDATE zamowienia SET Imie = @Imie, Nazwisko = @Nazwisko, TELEFON = @TELEFON,Email=@Email WHERE Imie = @Tajemnica";
-            SqlConnection connection = new SqlConnection(MSDEconn);          
-            SqlCommand command = new SqlCommand(query, connection);
- 
-            connection.Open();
-           
-            command.Parameters.AddWithValue("@Tajemnica", a);
-            command.Parameters.AddWithValue("@Imie", dataArray[0]);
-            command.Parameters.AddWithValue("@Nazwisko", dataArray[1]);
-            command.Parameters.AddWithValue("@TELEFON", dataArray[2]);
-            command.Parameters.AddWithValue("@Email", dataArray[3]);
+            if (!String.IsNullOrWhiteSpace(clientNameString)
+                && !String.IsNullOrWhiteSpace(clientSecondNameString)
+                && !String.IsNullOrWhiteSpace(clientPhoneString)
+                && !String.IsNullOrWhiteSpace(clientEmailString))
+            {
 
-            command.ExecuteNonQuery();
+                //Dodaje dane do ostatniego zamówienia
+
+                string query = "UPDATE zamowienia SET Imie = @Imie, Nazwisko = @Nazwisko, TELEFON = @TELEFON,Email=@Email WHERE Imie = @Tajemnica";
+                SqlConnection connection = new SqlConnection(MSDEconn);
+                SqlCommand command = new SqlCommand(query, connection);
+
+                connection.Open();
+
+                command.Parameters.AddWithValue("@Tajemnica", a);
+                command.Parameters.AddWithValue("@Imie", dataArray[0]);
+                command.Parameters.AddWithValue("@Nazwisko", dataArray[1]);
+                command.Parameters.AddWithValue("@TELEFON", dataArray[2]);
+                command.Parameters.AddWithValue("@Email", dataArray[3]);
+
+                command.ExecuteNonQuery();
                 connection.Close();
-          
-            MessageBox.Show("Zarezerwowano.");
-            goBack();
+
+                MessageBox.Show("Zarezerwowano.");
+                goBack();
+            }
+            else
+            {
+                MessageBox.Show("Musisz wypełnić wszystkie pola.");
+            }
         }
 
         private void GoBackBtn_OnClick(object sender, RoutedEventArgs e)
-        {  
+        {
             goBack();
         }
         //sprawdzanie poprawnosci wprowadzonych danych oraz zapisywanie ich do zmiennych publicznych
-        
+
         private void ClientNameTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
             clientNameString = clientNameTxt.Text;
-            if (clientNameString.Length > 50) throw new IndexOutOfRangeException("Imie nie moze przekraczac 50 znakow");   
+            if (clientNameString.Length > 50) throw new IndexOutOfRangeException("Imie nie moze przekraczac 50 znakow");
         }
 
         private void ClientPhoneTxt_TextChanged(object sender, TextChangedEventArgs e)
@@ -108,6 +120,7 @@ namespace wpflogin
 
             if (Double.TryParse(clientPhoneString, out j))
                 clientPhoneString = j.ToString();
+
             else
                 MessageBox.Show("Niepoprawny format wprowadzonych danych");
         }
@@ -120,9 +133,9 @@ namespace wpflogin
 
         private void ClientEmailTxt_TextChanged(object sender, TextChangedEventArgs e)
         {
-             clientEmailString = clientEmailTxt.Text;
+            clientEmailString = clientEmailTxt.Text;
             if (clientEmailString.Length > 50) throw new IndexOutOfRangeException("Email nie moze przekraczac 50 znakow");
         }
-        
+
     }
 }
