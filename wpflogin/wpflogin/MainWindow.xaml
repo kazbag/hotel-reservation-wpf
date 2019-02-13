@@ -60,7 +60,6 @@
                 </Grid.ColumnDefinitions>
 
                 <ComboBox Name="adultsCombobox" SelectedItem="1" Margin="10 0" Grid.Column="0">
-                    <ComboBoxItem Content="0"></ComboBoxItem>
                     <ComboBoxItem Content="1"></ComboBoxItem>
                     <ComboBoxItem IsSelected="True" Content="2"></ComboBoxItem>
                     <ComboBoxItem Content="3"></ComboBoxItem>

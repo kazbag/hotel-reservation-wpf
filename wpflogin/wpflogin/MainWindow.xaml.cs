@@ -76,12 +76,12 @@ namespace wpflogin
 
             //sprawdza logiczność wyborów
 
-            if (Convert.ToByte(adultsCombobox.SelectedIndex.ToString()) == 0
-                && Convert.ToByte(childrenCombobox.SelectedIndex.ToString()) == 0)
-            {
-                MessageBox.Show("Błąd: Nie możesz zarezerwować pokoju 0 osobowego.");
-            }
-            else if (selectedDayFromString == "")
+            //if (Convert.ToByte(adultsCombobox.SelectedIndex.ToString()) == 0
+            //    && Convert.ToByte(childrenCombobox.SelectedIndex.ToString()) == 0)
+            //{
+            //    MessageBox.Show("Błąd: Nie możesz zarezerwować pokoju 0 osobowego.");
+            //}
+            if (selectedDayFromString == "")
             {
                 MessageBox.Show("Błąd: Nie wybrano daty początku rezerwacji");
             }
@@ -109,8 +109,8 @@ namespace wpflogin
                 string currentValueFromAdultsCombobox = adultsCombobox.SelectedIndex.ToString();
                 string currentValueFromChildrenCombobox = childrenCombobox.SelectedIndex.ToString();
 
-                int currentValue = (Convert.ToInt16(currentValueFromAdultsCombobox) +
-                        Convert.ToInt16(currentValueFromChildrenCombobox));
+                int currentValue = (Convert.ToInt16(currentValueFromAdultsCombobox));
+                int currentValue2 = currentValue + 1;
                 // tylko wyświetla liczbę osób, sprawdzenie czy jest ok. można wyrzucić.
 
                 //przypisywanie wartosci checkboxow do zmiennych
@@ -130,7 +130,7 @@ namespace wpflogin
                 if (breakfastToBed.IsChecked == true) breakfastToBedCheckBox = true;
                 else breakfastToBedCheckBox = false;
                 // zapisanie wartosci checkboxow w tablicy
-                string[] checkboxArray = new string[9] { selectedDayToString, SelectedDayTo.ToString(), currentValue.ToString(),
+                string[] checkboxArray = new string[9] { selectedDayToString, SelectedDayTo.ToString(), currentValue2.ToString(),
                     wakeUpCheckbox.ToString(), fridgeCheckbox.ToString(),safeCheckBox.ToString(),
                     childBedCheckBox.ToString(), coffeeMachineCheckBox.ToString(), breakfastToBedCheckBox.ToString() };
 
@@ -139,7 +139,7 @@ namespace wpflogin
                 TimeSpan czasRezerwacji = SelectedDayTo - SelectedDayFrom;
                 int dniRezerwacji = czasRezerwacji.Days;
               
-                cenaPokoju = cenaPokoju * currentValue;
+                cenaPokoju = cenaPokoju * currentValue2;
 
                 if (wakeUpCheckbox)
                     cenaPokoju += 20;
@@ -152,13 +152,13 @@ namespace wpflogin
                 if (coffeeMachineCheckBox)
                     cenaPokoju += 30;
                 if (breakfastToBedCheckBox)
-                    cenaPokoju += currentValue*50;
+                    cenaPokoju += currentValue2*50;
 
                 cenaPokoju = cenaPokoju * dniRezerwacji;
 
                 // wyswietlenie komunikatu potwierdzanjacego wybrane opcje
                 MessageBox.Show(
-                    $" Ilość osób: {currentValue}" +
+                    $" Ilość osób: {currentValue2}" +
                     $"\r\n Początek rezerwacji: {selectedDayFromString}" +
                     $"\r\n Koniec rezerwacji: {selectedDayToString}" +
                     $"\r\n Pobudka: {MainWindow.CheckBoxNamesConverter(wakeUpCheckbox)}" +
@@ -278,9 +278,9 @@ namespace wpflogin
 
                     MessageBox.Show("Ilość pokoi z wybranymi przez ciebie dodatkami: " + iloscZnalezionychPokoi + 
                                     $"\rKliknij OK żeby sprawdzić ich dostępność w wybranym przez ciebie terminie terminie");
-                    this.Close();
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
+                    this.Close();
 
                     MessageBox.Show("Brak dostępnych pokoi.\r Proszę wybrać inne Dodatki lub zmienić datę rezerwacji");
                 }
