@@ -162,16 +162,17 @@ namespace wpflogin
                 // wyswietlenie komunikatu potwierdzanjacego wybrane opcje
                 MessageBox.Show(
                     $" Ilość osób: {currentValue2}" +
-                    $"\r\n Początek rezerwacji: {selectedDayFromString}" +
-                    $"\r\n Koniec rezerwacji: {selectedDayToString}" +
+                    $"\r\n Ilość dzieci do lat 3: {childrenValue}" +
+                    $"\r\n Początek rezerwacji: { DateTime.Parse(selectedDayFromString).ToString("dd.MM.yyyy")}" +
+                    $"\r\n Koniec rezerwacji: {DateTime.Parse(selectedDayToString).ToString("dd.MM.yyyy")}" + 
                     $"\r\n Pobudka: {MainWindow.CheckBoxNamesConverter(wakeUpCheckbox)}" +
                     $"\r\n Lodówka: {MainWindow.CheckBoxNamesConverter(fridgeCheckbox)}" +
                     $"\r\n Sejf: {MainWindow.CheckBoxNamesConverter(safeCheckBox)}" +
-                    $"\r\n Łóżeczko dla dziecka: {MainWindow.CheckBoxNamesConverter(childBedCheckBox)}" +
+                    $"\r\n Łóżeczko dla dziecka: {MainWindow.CheckBoxNamesConverter(childBedCheckBox)} x{childrenValue}" +
                     $"\r\n Ekspres do kawy: {MainWindow.CheckBoxNamesConverter(coffeeMachineCheckBox)}" +
                     $"\r\n Śniadanie do łóżka: {MainWindow.CheckBoxNamesConverter(breakfastToBedCheckBox)}" +
-                    $"\r\n Cena zamówienia: {cenaPokoju}zł"
-                    );
+                    $"\r\n Cena zamówienia: {cenaPokoju} zł"
+                );
 
 
                 string MSDEconn5 = ConfigurationManager.ConnectionStrings["MyConnection"].ConnectionString;
